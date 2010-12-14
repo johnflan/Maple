@@ -1,4 +1,4 @@
-\documentclass[pdftex,12pt,a4paper]{article}
+\documentclass[pdftex,12pt,a4paper]{report}
 \usepackage{anysize}
 \marginsize{3.8cm}{2.5cm}{2.5cm}{2.5cm}
 \usepackage[pdftex]{graphicx}
@@ -86,8 +86,10 @@
 
 
 \pagebreak
-\def\refname{}
-\bibliography{references}
+%\def\refname{}
+
 \bibliographystyle{plain}
+\bibliography{references}
+\nocite{*}
 
 \end{document}

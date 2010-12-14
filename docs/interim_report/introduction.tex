@@ -1,0 +1,31 @@
+\chapter{Introduction}
+
+This project intends to investigate the possibility of performing image analysis or more specifically object recognition on mobile platforms. For this project the class of objects that we are concerned with are tree leaves. This project will attempt to document the steps necessary to create a computer program to process image data taken directly from a devices camera and attempt to identify the class of tree it comes from purely based on analysis of the photographic image.
+
+This is not a completely novel solution, as there are a number of software applications in the mobile space that attempt to solve this same problem. For example the Google Goggles\textsuperscript{\texttrademark} application attempts to identify objects in the images by downsampling the image and transmitting it to a remote data centre for processing. In this case the whole image is transmitted largely due to two factors. Firstly, they are trying to identify any object in the image that has being previously indexed therefore much more processing is involved. Secondly this reliance on the cloud platform for processing is a key business interest for the company.
+
+While this transmission of data for remote processing is acceptable for users based in well connected areas, more remote users may face difficulties with mobile networks offering only degraded data rates in these locations \cite{iia08}. This solution will explore the possibility of performing most or all of this processing on the mobile device relying less on high data rates.
+
+The key to the solution is to perform an analysis of the data on the local hardware, only transmitting a fingerprint to a remote database for lookup. This is exactly the solution employed by Shazam, an application that generates a fingerprint from a sample of audio and then perform a remote look-up against a database for the artist and song title \cite{wang03}. It is necessary to perform these remote lookup’s due to the size and proprietary nature of the database. In this case transmitting only the fingerprint minimises the bandwidth consumed and requires much less processing facility on the server side. Optionally, if it is discovered a fingerprint cannot be matched on the remote database it might be advisable to upload a downsampled version of the data for later analysis.
+
+For this application initially at least, it will be possible to store the lookup data on the mobile device, but later it may become unfeasible as the database of trees begins to grow. In this case it would be necessary to create server side software to handle these fingerprint lookup requests. With a network connection it will be possible to provide links to rich data sources for the scanned leaf and to potentially log data about the tree such as location, time of year etc.
+
+\subsection*{Generating leaf fingerprints}
+Before we begin looking at the technical aspects of scanning and identifying features of leaves, we must be cognisant of the variance in shape, color and also of damage due to insects that leaves may incur. Each of these variances offer unique difficulties in generating a successful fingerprinting mechanism.
+
+The design of this fingerprinting mechanism is key to the success of this project. In order to generate this we need to look at the data we can acquire from the imaging hardware available on devices of this class. The next big step will be to use image processing techniques to separate the leaf element from the rest of the image. There are many algorithms for edge detection and body detection which will need exploration, we will discuss these further on in this report.
+
+Once we have the leaf identified in the image, a mechanism will be required to create a fingerprint for this leaf. Due to the change in leaves color over the seasons and poor color calibration on many of these devices, we may be limited to shape data only. This area will require a considerable portion of the time budget for the project.
+
+If it proves to be impossible to generate a fingerprint that is unique enough to identify the class of tree and general enough to be generated from scanning a variety of leaves from the same type of tree, we may need to implement some sort of ranking mechanism. This mechanism could simply offer a ranked list of solutions offering it to the user to select the most appropriate. Or alternatively the software could automatically pick the most probable result taking location, rank and previous selections into account.
+
+These details are going to prove difficult to implement pragmatically, as object recognition in imagery is still in its early days and there is a quite large learning curve with developing these types of applications.
+
+\subsection*{User application}
+To establish the success or otherwise of the project it is important to build a working application to demonstrate the processing capability of mobile hardware and to prove the value of such an approach in this type of scenario. To achieve this goal, it is the aim of this project to develop a mobile application and to make it as feature complete as possible with in the time available, in order to demonstrate the concepts.
+
+Due to availability of hardware, ease of development and suitable image processing libraries the platform that will be utilised for the development stage of this project will be a Google Android\textsuperscript{\texttrademark} based smartphone, further on we describe of this choice was made.
+
+Applications for this platform are written in a subset of Java\textsuperscript{\texttrademark}. Due to the way in which code is executed on the platform it may pose performance issues when performing CPU intensive tasks, such as image processing in this case. Fortunately, Android provides a method of executing parts of a application in a lower level language namely C, Google calls this their NDK or native development toolkit. This NDK will be utilised to execute the image processing portions of this application through the calling of native functions in an image processing framework.
+
+There is currently no plans within this time frame to implement a server side application to handle fingerprint lookup requests or any other traffic from the application. This is primarily due to time constraints, but it is not necessary to prove the application.

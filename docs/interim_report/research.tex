@@ -1,0 +1,15 @@
+\chapter{Research}
+
+Before we begin to look at the specific components to be used in this project, we will layout the general line of thought that defined the initial research undertaking.
+
+Research on the topic begun by seeking out and talking to a number of students who have previous experience in this area, this was quite helpful. The resulting suggestions from these conversations formed good starting points to begin research on the topics.
+
+One suggested project to study was OpenCV an open source computer vision library released under the BSD licence from the Intel Corporation\textsuperscript{\texttrademark}. This library provides implementations of many of the processing algorithms that may be required for the project and is available on both Android and iPhone.
+
+A number of other open source computer vision libraries were also explored such as VTK, Integrating Vision Toolkit and FIJI. But due to issues such as availability on mobile platforms, existing development community and functionality it was decided that OpenCV offered the most favourable offering.
+
+Both of the major mobile platforms were discussed and researched but it was thought with the lack of third-party libraries, the closed nature of the platform and this writers unfamiliarity with development on the iPhone platform, that development progress on the iPhone may be quite slow. Development on the Android platform appears to have a mush lower barrier to entry, as the primary development language is Java. Also from studying development and image processing topics it appears to have a quite vibrant development community supporting the platform, which may prove useful later.
+
+At this stage its is important to discover the current state of the art in this area. For object identification in image data, it appears to be an area with much active research but still in the embryonic stages. One impressive application is the Google Goggles application, with which the user can take a picture of any object and the software will attempt to identify the object in the image - e.g. taking a picture of a logo will return a link to the owners website. For well known logos and object this software is quite successful. But unlike the solution we wish to implement for this project, most of the processing is completed server side.
+
+Another interesting area of study was the architecture of Shazam, a system that records an audio sample on a mobile device, extracts a fingerprint and performs a lookup against remote servers \cite{laplacian09, redcode10}. Although processing audio data instead of image data, this system has many common elements with the architecture being investigated for this project.
