@@ -1,2 +1,19 @@
 \chapter{Current Progress}
 
+Progress has been made on a number of areas in the project, both on the Android application development and also on the image processing task. While initial progress has been slow in terms of producing software, initially researching platforms, library's and tools as well as getting these configured and creating some demo projects have been important steps. Getting to this point has required much background reading and experimenting. Below we look at progress in each specific areas of the project.
+
+\subsection*{Android Development}
+With help from tutorials on \url{developer.android.com} a number of prototypes have been created to mimic functionality that will be required by the application. Implementing standard user interface elements is trivial, but there is a requirement that the application be able to display a list possible matches in the case of an ambiguous lookup for a tree. This required the creation of a  quite complex UI structure to display a list of groups containing title text, description text and an image representing that list element.
+
+Another area of the Android framework that required research was the passing of data between application screen or ‘views’ in Android terminology. There are still a number of remaining decisions that need to be made with regard to this, such as the keeping the data in memory or as recommended persisting it to disk or database between each ‘view’.
+
+A wire-frame user interface sequence has been created which acts as a guide for the development of functionality for driving the development of the application.
+
+\subsection*{OpenCV}
+
+This is due to the fact that the emulation environment for Android is unable to simulate images being acquired from the imaging device. This would make it necessary to deploy each build of the application to the phone for testing and debugging, which would slow the image processing portion of the development as well as become quite frustrating. Fortunately, it is also possible to execute this framework on the desktop using a web-cam as its imaging input. This has been discussed in the research chapter of this document.
+
+\subsubsection*{OpenCV on Android}
+Within the Android application OpenCV is to be a core component to the program. To date success has been attained in cloning the library repository, building the library in the local environment and deploying a demo application to the virtual machine and to a real phone.
+
+However when executing in the virtual environment OpenCV appears to have trouble in binding to the virtual camera device, which provides programs with a test image for debugging purposes. After a quick search through the bug database, no raised issues were found. This is not a major problem at this current stage, but will need to be resolved as the project progresses.
