@@ -1,0 +1,42 @@
+\begin{thebibliography}{1}
+
+\bibitem{bradski08}
+Gary Bradski and Adrian Kaehler.
+\newblock {\em Learning OpenCV}.
+\newblock O'Reilly, 2008.
+
+\bibitem{iia08}
+Irish internet association.
+\newblock Broadband coverage.
+\newblock \url{http://www.iia.ie/resources/download/356/}, June 2008.
+
+\bibitem{laplacian09}
+Bryan Jacobs.
+\newblock How shazam works.
+\newblock \url{http://laplacian.wordpress.com/2009/01/10/how-shazam-works/},
+  January 2009.
+
+\bibitem{preston06}
+Scott Preston.
+\newblock {\em The definitive guide to building Java robots}, chapter 6 -
+  Vision.
+\newblock Apress, 2006.
+
+\bibitem{rogers09}
+Rick Rogers, John Mombardo, Zigurd Mednieks, and Blake Meike.
+\newblock {\em Android application development}.
+\newblock O'Reilly, 2009.
+
+\bibitem{redcode10}
+Roy van Rijn.
+\newblock Creating shazam in java.
+\newblock \url{http://www.redcode.nl/blog/2010/06/creating-shazam-in-java/},
+  June 2010.
+
+\bibitem{wang03}
+Avery Li-Chun Wang.
+\newblock An industrial-strength audio search algorithm.
+\newblock \url{http://www.ee.columbia.edu/~dpwe/papers/Wang03-shazam.pdf},
+  2003.
+
+\end{thebibliography}

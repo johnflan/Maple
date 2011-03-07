@@ -1,0 +1,4 @@
+import os
+env = Environment(ENV=os.environ)
+pdfOutput = env.PDF(target='report.pdf',source='report.tex')
+Depends(pdfOutput,Split('report.tex bibliography.bib'))
