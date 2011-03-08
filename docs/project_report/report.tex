@@ -1,6 +1,6 @@
 \documentclass[pdftex,12pt,a4paper]{report}
 \usepackage{anysize}
-\marginsize{3.8cm}{2.5cm}{2.5cm}{2.5cm}
+\marginsize{3.0cm}{2.5cm}{2.5cm}{2.5cm}
 \usepackage[pdftex]{graphicx}
 \usepackage{wrapfig}
 \usepackage{url}
@@ -8,6 +8,8 @@
 \usepackage{color}
 \usepackage{textcomp}
 \usepackage{setspace}
+\usepackage{multicol}
+\usepackage{nomencl}
 \onehalfspacing
 
 
@@ -45,7 +47,7 @@
 \usepackage{fancyhdr}
 
 \pagestyle{fancy}
-\lhead{\footnotesize {FYP Project Report} }
+\lhead{\footnotesize {} }
 \rhead{\footnotesize {Maple} }
 
 \renewcommand\headheight{24pt}
@@ -67,11 +69,16 @@
 \input{abstract/abstract.tex}
 \pagebreak
 
+
 \input{declaration/declaration.tex}
 \pagebreak
 
 
 \input{table_of_contents/table_of_contents.tex}
+\pagebreak
+
+
+\input{list_of_figures/list_of_figures.tex}
 \pagebreak
 
 
@@ -94,14 +101,38 @@
 \pagebreak
 
 \input{conclusions/conclusions.tex}
-\pagebreak
 
 \pagebreak
 %\def\refname{}
 
-\chapter{References}
-\bibliographystyle{plain}
-\bibliography{bibliography}
-%\nocite{*}
+%: ----------------------- glossary ------------------------
+
+% Tie in external source file for definitions: /0_frontmatter/glossary.tex
+% Glossary entries can also be defined in the main text. See glossary.tex
+\include{glossary/glossary.tex} 
+\renewcommand{\bibname}{Glossary} % changes the header; default: Bibliography
+\begin{multicols}{2} % \begin{multicols}{#columns}[header text][space]
+\begin{footnotesize} % scriptsize(7) < footnotesize(8) < small (9) < normal (10)
+
+\printnomenclature[1.5cm] % [] = distance between entry and description
+\label{nom} % target name for links to glossary
+
+\end{footnotesize}
+\end{multicols}
+\pagebreak
+
+
+%\addcontentsline{toc}{chapter}{Bibliography}
+\renewcommand{\bibname}{References} % changes the header; default: Bibliography
+	\begin{multicols}{2} % \begin{multicols}{ # columns}[ header text][ space]
+	\begin{small} % tiny(5) < scriptsize(7) < footnotesize(8) < small (9)
+
+	\bibliographystyle{plain}
+	\bibliography{bibliography}
+	%\nocite{*}
+
+	\end{small}
+	\end{multicols}
+\pagebreak
 
 \end{document}
