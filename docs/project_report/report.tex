@@ -3,7 +3,8 @@
 \marginsize{3.0cm}{2.5cm}{2.5cm}{2.5cm}
 \usepackage[pdftex]{graphicx}
 \usepackage{wrapfig}
-\usepackage{url}
+\usepackage[pdftex]{hyperref}
+%\usepackage{url}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{textcomp}
@@ -12,6 +13,19 @@
 \usepackage{nomencl}
 \onehalfspacing
 
+%----Configure URL's in PDF
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+	pdftitle={Maple - FYP Project Report},
+	pdfauthor={John Flanagan},
+}
+
+%----Configure sourcecode listings
 
 \lstset{
 	backgroundcolor=\color{lbcolor},
@@ -109,7 +123,7 @@
 
 % Tie in external source file for definitions: /0_frontmatter/glossary.tex
 % Glossary entries can also be defined in the main text. See glossary.tex
-\include{glossary/glossary.tex} 
+\include{glossary/glossary} 
 \renewcommand{\bibname}{Glossary} % changes the header; default: Bibliography
 \begin{multicols}{2} % \begin{multicols}{#columns}[header text][space]
 \begin{footnotesize} % scriptsize(7) < footnotesize(8) < small (9) < normal (10)
