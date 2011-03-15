@@ -60,17 +60,57 @@ When the application is started the user is presented with an on screen view fin
 
 It is valuable to identify an application at this stage that is capable of performing some form of image analysis on the handset. While the application of the image analysis in this instance is being applied to relatively structured input it is still faced with performance, lighting and optical constraints that are likely to play a factor in this project.
 
-\section{Android OS}
+\section{Android Platform}
 As mentioned earlier in this report, the Google Android platform has gained considerable market penetration in the short few years since its release in 2008. A large number of manufacturers including Samsung, LG, Motorola, HTC and Sony Ericsson have been producing Android based handsets at a vast range of price points and configurations. This variety of available hardware coupled with development for the platform through the Java programming language makes it an appealing platform to develop for.
 
-Google Android is a operating system and software stack, consisting of a modified Linux kernel, a collection of C based libraries offering database, media and 3d graphics to the system and a custom built Java virtual machine called Dalvik. This virtual machine is different to traditional Java VM’s which are traditionally stack based, Dalvik is a register based VM. To execute standard Java classes on the VM \emph{.class} files must be converted to a single Dalvik \emph{.dex}, duplicated data such as strings and constants are removed which helps to conserve space. This conversion process helps to reduce the in memory footprint of an application.
+Android is an open-source software stack designed for mobile devices it is developed by Google and the Open Handset Alliance and is maintained by the Android Open Source Project (AOSP). It consists of a modified Linux Kernel, Android Runtime also known as the Dalvik virtual machine, Libraries, Application Framework and a collection of Applications.
+
+\subsection{Architecture}
+\subsubsection{Kernel}
+Android at its lowest level utilises a Linux 2.6 based kernel, listed below are some of the more major modifications \cite{elinuxandroidkernel}. Due to the level of modification, specifically changes to locking, the security model and the driver infrastructure this Android code is not part of the mainline kernel \cite{registerAndroidKernel10}. It is important to note that in the Android environment does not provide support for the full set of standard GNU libraries with glibc being a prime example, this may provide difficulty when porting projects to the environment.
+
+\begin{itemize}
+\item IPC - Addition of CORBA-like IPC mechanism (Binder)
+\item Shared memory allocator (ashmem)
+\item Process memory allocator (pmem)
+\item Logging - Support for Android logcat command
+\item Power management (wakelocks) 
+\item OOM - Out of memory handling modifications
+\end{itemize}
+
+As we can see in Figure \ref{android_arch} the kernel provides core systems services such as memory, process, power and network management as well as abstracting the hardware away from the rest of the stack.
+
+\subsubsection{Native Libraries}
+Moving up the stack to the libraries section, Android provides a number of C/C++ based libraries which can been seen in Figure \ref{android_arch}. Much system wide functionality is implemented here, for example Surface Manager which manages the display subsystem and SQLlite which provides structured storage to installed applications. Also interestingly the web-browser rendering engine is provided as a library/service at this level which is done to enable as fast as possible rendering of content \cite{googioanatomy08}. 
+
+\colorbox{red}{Should I expand on the difference between services/libraries at this stage}
+
+\colorbox{red}{Boot Process \url{http://elinux.org/Android_Booting}}
 
 \begin{figure}[h!]
 \centering
     \includegraphics[width=1\textwidth]{research/images/android_arch.png}
-	\caption{Android architecture overview}%
-	\label{android_arch}
+    \caption{Android architecture overview}%
+    \label{android_arch}
 \end{figure}
+
+\subsubsection{Virtual Machine}
+Illustrated differently in Figure \ref{android_arch} but at the same level in the stack is the Dalvik JIT based process virtual machine and Harmony open-source Java class library. The Dalvik virtual machine is a crucial element is the Android stack, on-top of which all user facing code is executed.  The use of such a virtual machine enables the development of applications in a memory managed environment. Additionally as it is a process based virtual machine each process starts its own instance of the VM and depends on the system kernel for threading and low level memory management. In the case of a crashed or hung application the VM can be terminated without effect on other running applications or services.
+
+Dalvik is different from traditional VM’s in that it is register based and not stack based like the Java Virtual Machine. This register based approach uses in the region of 47\% less instructions but the executable size tends to be larger \cite{ehringerdalvik10}.
+
+The Android developers have attempted to mitigate this larger executable size by create a new executable file format called dex. In a traditional Java application each class is compiled into a bytecode .class file and these files are zipped up to build a .jar file. When building an Android application these .class files are compiled into a single .dex executable. This enables space savings to be made by sharing data like literal constants and headers that would normally be duplicated across a number of .class files \cite{ehringerdalvik10}.
+
+This register based approach with dex format executable’s is optimised for battery based devices with constrained CPU and memory. 
+
+It is important to note that the Java Implementation does not utilise all of the established Java standards (Java SE, Java ME), which prevents compatibility among Java applications written for other environments.
+
+\subsubsection{Application Framework}
+
+
+\subsection{Program Structure}
+\subsection{Developmet Enviroment}
+
 
 To begin developing an understanding of the platform a number of tutorials and documents on the developer site \url{developer.android.com} were followed, and they proved to be valuable in getting to grips with the platform. 
 
@@ -79,7 +119,5 @@ To begin developing an understanding of the platform a number of tutorials and d
 \subsection{Libraries}
 
 \subsection{Techniques}
-
-\section{JINI and the NDK}
 
 \section{Focus}
