@@ -83,7 +83,7 @@ As we can see in Figure \ref{android_arch} the kernel provides core systems serv
 \subsubsection{Native Libraries}
 Moving up the stack to the libraries section, Android provides a number of C/C++ based libraries which can been seen in Figure \ref{android_arch}. Much system wide functionality is implemented here, for example Surface Manager which manages the display subsystem and SQLlite which provides structured storage to installed applications. Also interestingly the web-browser rendering engine is provided as a library/service at this level which is done to enable as fast as possible rendering of content \cite{googioanatomy08}. 
 
-\colorbox{red}{Should I expand on the difference between services/libraries at this stage}
+\colorbox{red}{Should I expand on the difference between services/libraries at this stage and Kernel Space/User Space}
 
 \colorbox{red}{Boot Process \url{http://elinux.org/Android_Booting}}
 
@@ -106,9 +106,38 @@ This register based approach with dex format executable’s is optimised for bat
 It is important to note that the Java Implementation does not utilise all of the established Java standards (Java SE, Java ME), which prevents compatibility among Java applications written for other environments.
 
 \subsubsection{Application Framework}
+The last level of the Android platform we are going to explore is the Application Framework seen in Figure \ref{android_arch}. This framework is a set of API’s which give developers access to all the services and libraries listed in the previous sections. It is also important to note that developers have access to the same framework API’s that are used by core applications such as the Dialer and Text Messaging applications.
+
+The API is divided into a number of discrete units of functionality, each of these can be seen in the architecture overview diagram. A developer may not interact directly with many of these components but they form the basis for the framework.
+
+Here we will briefly describe some of the key components.
+
+\begin{description}
+\item[Activity Manager] Manages the applications lifecycle and calls methods in your code when the phone is about to stop, pause or display the activity.
+\item[Resource Manager] 
+\item[Location Manager] Provides geographic location data to an application. This provides access to hardware GPS devices as well as less accurate location data from services such as Skyhook.
+\item[Notification Manager] Offers a number of methods to notify the user of an event, this can include displaying icons, flashing LED’s, vibrating or playing a sound.
+%less important for developers
+\item[Window Manager] Creates surface onto which the application may draw its UI (View).
+\item[Content Providers] Special types implemented by the system or by applications for data that needs to be shared across applications, common content providers include contacts, media store and call log.
+\item[View System]
+\item[Package Manager]
+\item[Telephony Manager]
+\item[XMPP Service]
+\end{description}
+
 
 
 \subsection{Program Structure}
+
+
+\begin{figure}[h!]
+\centering
+    \includegraphics[width=0.7\textwidth]{research/images/activity_lifecycle.png}
+    \caption{Android Activity Lifecycle}%
+    \label{activity_lifecycle}
+\end{figure}
+
 \subsection{Developmet Enviroment}
 
 
