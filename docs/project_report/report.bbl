@@ -1,8 +1,8 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{googioanatomy08}
 Patrick Brady.
-\newblock The dalvik virtual machine.
+\newblock Anatomy & physiology of an android.
 \newblock
   \url{http://sites.google.com/site/io/anatomy--physiology-of-an-android}, June
   2008.
@@ -31,6 +31,13 @@ Cade Metz.
 \newblock
   \url{http://www.theregister.co.uk/2010/02/03/android_driver_code_deleted_fro%
 m_linux_kernel}, February 2010.
+
+\bibitem{googioappframework08}
+Dan Morrill.
+\newblock Inside the android application framework.
+\newblock
+  \url{http://sites.google.com/site/io/inside-the-android-application-framewor%
+k}, June 2008.
 
 \bibitem{sbs10}
 David Petrou.

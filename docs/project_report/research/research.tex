@@ -106,29 +106,52 @@ This register based approach with dex format executable’s is optimised for bat
 It is important to note that the Java Implementation does not utilise all of the established Java standards (Java SE, Java ME), which prevents compatibility among Java applications written for other environments.
 
 \subsubsection{Application Framework}
-The last level of the Android platform we are going to explore is the Application Framework seen in Figure \ref{android_arch}. This framework is a set of API’s which give developers access to all the services and libraries listed in the previous sections. It is also important to note that developers have access to the same framework API’s that are used by core applications such as the Dialer and Text Messaging applications.
+The last level of the Android platform we are going to explore is the Application Framework seen in Figure \ref{android_arch}. This framework is a set of Java based API’s which give developers access to all the services and libraries listed in the previous sections. It is also important to note that developers have access to the same framework API’s that are used by core applications such as the Dialer and Text Messaging applications.
 
 The API is divided into a number of discrete units of functionality, each of these can be seen in the architecture overview diagram. A developer may not interact directly with many of these components but they form the basis for the framework.
 
-Here we will briefly describe some of the key components.
+Below we will briefly describe some of the key framework components.
 
 \begin{description}
-\item[Activity Manager] Manages the applications lifecycle and calls methods in your code when the phone is about to stop, pause or display the activity.
-\item[Resource Manager] 
+\item[Activity Manager] Manages the applications lifecycle (Started, Running, Background, Killed) and notifies your application when the phone is about to move from one state to the next. The Activity Manager also maintains a common stack enabling a user to navigate from one application to another seamlessly.
+\item[Resource Manager] Contains all the infrastructure to manage strings, layouts and bitmaps for different locals and screen resolutions.
 \item[Location Manager] Provides geographic location data to an application. This provides access to hardware GPS devices as well as less accurate location data from services such as Skyhook.
 \item[Notification Manager] Offers a number of methods to notify the user of an event, this can include displaying icons, flashing LED’s, vibrating or playing a sound.
 %less important for developers
-\item[Window Manager] Creates surface onto which the application may draw its UI (View).
-\item[Content Providers] Special types implemented by the system or by applications for data that needs to be shared across applications, common content providers include contacts, media store and call log.
-\item[View System]
-\item[Package Manager]
-\item[Telephony Manager]
-\item[XMPP Service]
+\item[Window Manager] Creates surface’s onto which the application may draw its UI (View).
+\item[Content Providers] Special types implemented by the system or by applications to enable data sharing across applications, common content providers include contacts, media store and call log.
+\item[View System] Provides a the infrastructure for building user interface components (buttons, text boxes etc.) and their associated event handling. The view system provides access to the components in a tree like structure, much like the HTML DOM concept.
+\item[Package Manager] Enables access to various kinds of information about packages (applications) installed on the system.
+\item[Telephony Manager] Provides information to an application about the current state and availability of telephony services on the device. 
 \end{description}
 
 
+\subsection{Application Structure}
 
-\subsection{Program Structure}
+Android applications are packed into an APK file, which essentially a collection of components that share a set of resources such as databases, file space and preferences as well as a Linux process \cite{googioappframework08}. Each of these components has a managed filecycle which is controlled by the Activity Manager.
+
+Android applications are a collection of Activities, Tasks and Processes this structure is illustrated in Figure \ref{activity_activities_tasks_processes}. An activity is regarded as a single concrete element of functionality which may not have any UI, where as a task is a collection of activities potentially across a number of applications which are used to complete some unit of work. This offers the developer the ability create new applications that can to knit together existing components to maximise reuse and minimise development time.
+
+
+\begin{figure}[h!]
+\centering
+    \includegraphics[width=0.55\textwidth]{research/images/activities_tasks_processes.png}
+    \caption{Android Activities Tasks and Processes}%
+    \label{activity_activities_tasks_processes}
+\end{figure}
+
+As we have seen Android application framework is heavily designed around the concept of components, this component model incorporates:
+
+\begin{itemize}
+\item Activity Components\\
+Often represented as a single screen but may also have no UI, and is regarded as a focused element of functionality. Each activity has its lifecycle managed by the Activity Manager as illustrated in Figure \ref{activity_lifecycle}.
+\item Service Components\\
+Used typically when some long-run task is required, they have no UI and will run indefinitely. These services may be started by an Activity, but they continue to run after the Activity has been closed.
+\item Intent Receiver Components 
+Listens for broadcast Intents and performs some action. These Intents may be broadcast by the system e.g. battery low, notify the arrival of a message etc. or Intents may originate from other applications to signify some change of state.
+\item Content Provider Component\\
+Provides specific data in your application to other applications, not generally used to share data within an application.
+\end{itemize}
 
 
 \begin{figure}[h!]
@@ -138,7 +161,7 @@ Here we will briefly describe some of the key components.
     \label{activity_lifecycle}
 \end{figure}
 
-\subsection{Developmet Enviroment}
+\subsection{Development Enviroment}
 
 
 To begin developing an understanding of the platform a number of tutorials and documents on the developer site \url{developer.android.com} were followed, and they proved to be valuable in getting to grips with the platform. 
