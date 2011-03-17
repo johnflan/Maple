@@ -1,0 +1,62 @@
+\begin{thebibliography}{1}
+
+\bibitem{googioanatomy08}
+Patrick Brady.
+\newblock The dalvik virtual machine.
+\newblock
+  \url{http://sites.google.com/site/io/anatomy--physiology-of-an-android}, June
+  2008.
+
+\bibitem{canalys11}
+Canalys.
+\newblock Google’s android becomes the world’s leading smart phone
+  platform.
+\newblock \url{http://www.canalys.com/pr/2011/r2011013.html}, January 2011.
+
+\bibitem{ehringerdalvik10}
+David Ehringer.
+\newblock The dalvik virtual machine.
+\newblock
+  \url{http://davidehringer.com/software/android/The_Dalvik_Virtual_Machine.pd%
+f}, March 2010.
+
+\bibitem{elinuxandroidkernel}
+eLinux.org Embedded Linux~Wiki.
+\newblock Android kernel features.
+\newblock \url{http://elinux.org/Android_Kernel_Features}.
+
+\bibitem{registerAndroidKernel10}
+Cade Metz.
+\newblock Google's android code deleted from linux kernel.
+\newblock
+  \url{http://www.theregister.co.uk/2010/02/03/android_driver_code_deleted_fro%
+m_linux_kernel}, February 2010.
+
+\bibitem{sbs10}
+David Petrou.
+\newblock Search by sight: Google goggles.
+\newblock
+  \url{http://www.hotchips.org/uploads/archive22/Publish_Search_by_sight_Googl%
+e_Goggles.pdf}, August 2010.
+
+\bibitem{vbgoggles10}
+Dean Takahashi.
+\newblock How google goggles works to deliver visual search results for mobile
+  phones.
+\newblock
+  \url{http://venturebeat.com/2010/08/23/how-google-goggles-works-to-deliver-v%
+isual-search-results-for-mobile-phones/}, August 2010.
+
+\bibitem{wang03}
+Avery Li-Chun Wang.
+\newblock An industrial-strength audio search algorithm.
+\newblock \url{http://www.ee.columbia.edu/~dpwe/papers/Wang03-shazam.pdf},
+  2003.
+
+\bibitem{zxingproject}
+ZXing.
+\newblock Multi-format 1d/2d barcode image processing library with clients for
+  android, java.
+\newblock \url{http://code.google.com/p/zxing/}.
+
+\end{thebibliography}
