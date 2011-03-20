@@ -85,6 +85,8 @@ Moving up the stack to the libraries section, Android provides a number of C/C++
 
 \colorbox{red}{Should I expand on the difference between services/libraries at this stage and Kernel Space/User Space}
 
+\colorbox{red}{Native libraries main purpose is to support the Java layer - marko10}
+
 \colorbox{red}{Boot Process \url{http://elinux.org/Android_Booting}}
 
 \begin{figure}[h!]
@@ -113,7 +115,7 @@ The API is divided into a number of discrete units of functionality, each of the
 Below we will briefly describe some of the key framework components.
 
 \begin{description}
-\item[Activity Manager] Manages the applications lifecycle (Started, Running, Background, Killed) and notifies your application when the phone is about to move from one state to the next. The Activity Manager also maintains a common stack enabling a user to navigate from one application to another seamlessly.
+\item[Activity Manager] Manages the applications lifecycle and notifies your application when the phone is about to move from one state to the next. The Activity Manager also maintains a common stack enabling a user to navigate from one application to another seamlessly.
 \item[Resource Manager] Contains all the infrastructure to manage strings, layouts and bitmaps for different locals and screen resolutions.
 \item[Location Manager] Provides geographic location data to an application. This provides access to hardware GPS devices as well as less accurate location data from services such as Skyhook.
 \item[Notification Manager] Offers a number of methods to notify the user of an event, this can include displaying icons, flashing LED’s, vibrating or playing a sound.
@@ -130,8 +132,9 @@ Below we will briefly describe some of the key framework components.
 
 Android applications are packed into an APK file, which essentially a collection of components that share a set of resources such as databases, file space and preferences as well as a Linux process \cite{googioappframework08}. Each of these components has a managed filecycle which is controlled by the Activity Manager.
 
-Android applications are a collection of Activities, Tasks and Processes this structure is illustrated in Figure \ref{activity_activities_tasks_processes}. An activity is regarded as a single concrete element of functionality which may not have any UI, where as a task is a collection of activities potentially across a number of applications which are used to complete some unit of work. This offers the developer the ability create new applications that can to knit together existing components to maximise reuse and minimise development time.
+\colorbox{red}{List key files in APK package}
 
+Android applications are a collection of Activities, Tasks and Processes this structure is illustrated in Figure \ref{activity_activities_tasks_processes}. An activity is regarded as a single concrete element of functionality which may not have any UI, where as a task is a collection of activities potentially across a number of applications which are used to complete some unit of work. This offers the developer the ability create new applications that can to knit together existing components to maximise reuse and minimise development time.
 
 \begin{figure}[h!]
 \centering
@@ -140,11 +143,12 @@ Android applications are a collection of Activities, Tasks and Processes this st
     \label{activity_activities_tasks_processes}
 \end{figure}
 
+\subsubsection{Components}
 As we have seen Android application framework is heavily designed around the concept of components, this component model incorporates:
 
 \begin{itemize}
 \item Activity Components\\
-Often represented as a single screen but may also have no UI, and is regarded as a focused element of functionality. Each activity has its lifecycle managed by the Activity Manager as illustrated in Figure \ref{activity_lifecycle}.
+An Activity is often represented as a single screen but may also have no UI, and is regarded as a focused element of functionality. Each activity has its lifecycle managed by the Activity Manager.
 \item Service Components\\
 Used typically when some long-run task is required, they have no UI and will run indefinitely. These services may be started by an Activity, but they continue to run after the Activity has been closed.
 \item Intent Receiver Components 
@@ -153,6 +157,11 @@ Listens for broadcast Intents and performs some action. These Intents may be bro
 Provides specific data in your application to other applications, not generally used to share data within an application.
 \end{itemize}
 
+\subsubsection{Activities}
+
+In the Android Application Framework Applications are formed from a number of components named Activities, which are described as standalone units of functionality and may be instantiated by the user or the system. 
+
+An Activity may interact with the user through a View or may interact with the system through the use of Intents. The lifecycle of an Activity is determined by the platform, giving the system the ability to terminate an Activity when resources becomes scarce or when an application has not been used recently. The Activity Manager also invokes methods on the Activity when its state has changed, these states are illustrated in Figure \ref{activity_lifecycle}. 
 
 \begin{figure}[h!]
 \centering
@@ -161,12 +170,54 @@ Provides specific data in your application to other applications, not generally 
     \label{activity_lifecycle}
 \end{figure}
 
+\subsubsection{Intents}
+
+With this component based framework and in the extreme example of a Task made up of a number of Activities from different applications, a communication mechanism was required to bind all these Activities and Services together.
+
+The Android solution to this was the concept of an Intent, which eliminated the need to duplicate functionality in different applications, allowed functionality to be discovered and invoked on the fly and gave users the ability to replace units of functionality on the fly \cite{rogers09}. To quote the Android documentation “An Intent is a simple message object that represents an ”intention” to do something”. These Intents can be divided into two categories:
+
+\begin{itemize}
+\item Explicit Intents\\
+Used to call Activities where the component to be launched is explicitly specified by providing the exact class to be executed.
+\item Implicit Intents\\
+Used when not specifying a particular component but where the systems resolves the best Activity to handle the request.
+\end{itemize}
+
+Included below is a code snipped which illustrates the ease with which an application can call system services, in this example calling a telephone number. In order to fire this event the application must have privileges to use telephony services and these must be accepted by the user when installing the application. Due to the nature of the Intent architecture it is important to remember that the system makes no guarantees as to answering a fired Intent.
+
+\begin{lstlisting}
+Intent i = new Intent();
+i.setAction(Intent.ACTION_CALL);
+i.setData(Uri.parse("tel:" + phoneNumber));
+startActivity(i);
+\end{lstlisting}
+
+\subsection{Native Development Kit}
+The Android Application Framework as we have seen previously executes managed code in a in its own instance of a Dalvik virtual machine. This offers a number of advantages with the most prominent being architecture independence and the ability to manage memory, which is critical on a device with such limited resources. However, the downside to executing in a virutalised environment is a decreased level of performance due to the extra steps involved in converting the bytecode to native machine instructions. This performance penalty can be problematic for applications that are CPU bound, such forms of processing would include processing data from input devices such as microphones or cameras.
+
+The Android Native Development Toolkit enables the developer to write portions of an application known as Native Activities in a native language such as C or C++. The Android documentation point's out that performance increases are not guaranteed and with the NDK there is an increase in application complexity, an increase in the filesize of the APK due to targeting multiple processor architectures and potentially introducing an instability to the system as the Native Activity exists outside the Activity lifecycle and memory management features.
+
 \subsection{Development Enviroment}
 
+A cross platform free development environment complements the Android platform.  Below we list the tooling required:
 
-To begin developing an understanding of the platform a number of tutorials and documents on the developer site \url{developer.android.com} were followed, and they proved to be valuable in getting to grips with the platform. 
+\begin{itemize}
+\item The Eclipse IDE\\
+An open source cross platform IDE widely used in professional Java development.
+\item Sun/Oracle Java Development Kit (JDK)\\
+A set of tooling and run-time environment necessary for the development of Java based applications.
+\item Android Software Developer's Kit (SDK)\\
+Consists of a number tools: Android emulator, AVD Manager- Android Virtual Device Manager, ADB - Android Debugger Bridge and DDMS - Dalvik Debug Monitor Server.
+\item Android Developer Tool (ADT) plug-in\\
+An Eclipse IDE plug-in for Android development, which integrates building, launching and debugging into the IDE
+\end{itemize}
+
+\subsubsection{Software Configuration Management}
+In order to manage and track changes to the project it will be necessary to use some form of SCM. Linus Torvals GIT is a popular, free and powerful distributed version control system. It is currently used to manage the Linux kernel and there are a number of companies such as \url{github.com} offering free repository hosting for projects such as this.
 
 \section{Computer Vision}
+
+\subsection{Introduction}
 
 \subsection{Libraries}
 
