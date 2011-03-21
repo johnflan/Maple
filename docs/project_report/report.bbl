@@ -25,6 +25,11 @@ eLinux.org Embedded Linux~Wiki.
 \newblock Android kernel features.
 \newblock \url{http://elinux.org/Android_Kernel_Features}.
 
+\bibitem{feili10}
+Prof. Fei-Fei Li.
+\newblock Cs 223b: Introduction to computer vision.
+\newblock \url{http://vision.stanford.edu/teaching/cs223b}, 2010.
+
 \bibitem{registerAndroidKernel10}
 Cade Metz.
 \newblock Google's android code deleted from linux kernel.
@@ -45,6 +50,11 @@ David Petrou.
 \newblock
   \url{http://www.hotchips.org/uploads/archive22/Publish_Search_by_sight_Googl%
 e_Goggles.pdf}, August 2010.
+
+\bibitem{wilson99}
+Frank C.~Keil Robert Andrew~Wilson.
+\newblock {\em The MIT encyclopedia of the cognitive sciences}.
+\newblock MIT Press, 1999.
 
 \bibitem{rogers09}
 Rick Rogers, John Mombardo, Zigurd Mednieks, and Blake Meike.
