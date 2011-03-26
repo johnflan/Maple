@@ -216,18 +216,47 @@ An Eclipse IDE plug-in for Android development, which integrates building, launc
 In order to manage and track changes to the project it will be necessary to use some form of SCM. Linus Torvals GIT is a popular, free and powerful distributed version control system. It is currently used to manage the Linux kernel and there are a number of companies such as \url{github.com} offering free repository hosting for projects such as this.
 
 \section{Computer Vision}
-In essence Computer Vision refers to the act of processing images acquired from a camera to produce a representation of the real-world.  It is a relatively new field with its origins being traced back to an MIT undergraduate summer project in 1966 \cite{feili10}. Processing vision is a difficult problem even in biology where it has been estimated that ”more than half of the cerebral cortex in the Macaque monkey is involved in processing visual signals” \cite{wilson99}.
+In essence Computer Vision refers to the act of processing images acquired from a camera to produce a representation of the real-world.  It is a relatively new field with its origins being traced back to an MIT undergraduate summer project in 1966 \cite{feili10}. Processing vision is a difficult problem even in the natural world where it has been estimated that ”more than half of the cerebral cortex in the Macaque monkey is involved in processing visual signals” \cite{wilson99}.
 
-Currently Vision is an area of much research, with a number of new consumer products being released with Vision capabilities. For example in the last year or so we have seen the release of the Microsoft Xbox Kinect which relies on tracking human gestures for interaction or the Sony Cyber-shot T70 with smile detection.  Vision techniques are also becoming important in adding semantic meaning and searchability to the many millions of still images and minutes of video being uploaded to sites like \url{YouTube.com} and \url{Facebook.com}. 
+Currently Vision is an area of much research, recently a number of new consumer products have been released with Vision capabilities. For example in the last year or so we have seen the release of the Microsoft Xbox Kinect which relies on tracking human gestures for interaction or the Sony Cyber-shot T70 with smile detection.  Vision techniques are also becoming important in adding semantic meaning and searchability to the many millions of still images and minutes of video being uploaded to sites like \url{YouTube.com} and \url{Facebook.com}. 
 
 Computer Vision techniques have been successful when applied to specialised domains as listed above but identification and categorisation of the real-world is still in its infancy.
 
 \subsection{The Problem}
 One of the goals of this project is to utilise computer vision techniques to identify the particular type of trees from their leaves. There are many challenges associated with this type of problem, and as we have seen earlier in this chapter even existing applications such as Google Goggles have difficulty classifying real-world objects.
 
-Before we begin looking at the technical aspects of scanning and identifying features of leaves, we must take cognisance of the variance in shape and color that leaves of the same type may provide. These variances may be due to physical damage or natural variance of the leaf, or may be the result of the lighting conditions, angle at which the image was exposed or even optical anomalies in the cameras lens.
+Before we begin looking at the technical aspects of scanning and identifying features of leaves, we must take cognisance of the variance in shape and color that leaves of the same type may provide. These differences may be due to physical damage or natural variance of the leaf, or may be the result of lighting conditions, angle at which the image was exposed or even optical anomalies in the camera lens.
 
 \subsection{Libraries}
+Research on the topic begun by seeking out and talking to a number of students with previous experience in image processing. This provided an initial overview of the field and a number of libraries were suggested. After some independent study of available options only a small number of these libraries were deemed to be useful. Many Vision Libraries are orientated to solving medical, biological or engineering image processing problems, this project called for more general purpose functionality. Below a number of potentially suitable libraries are described.
+
+\colorbox{red}{Java, Android documentation and community}
+
+\subsubsection{VXL}
+VXL is a C++ library which implements a number of common vision algorithms. The library is divided into a number of core libraries, these include: 
+
+\begin{itemize}
+\item vnl (numerics): Numerical containers and algorithms. e.g. matrices, vectors, decompositions, optimisers.
+\item vil (imaging): Loading, saving and manipulating images in many common file formats, including very large images.
+\item vgl (geometry): Geometry for points, curves and other elementary objects in 1, 2 or 3 dimensions.
+\item vsl (streaming I/O), vbl (basic templates), vul (utilities): Miscellaneous platform-independent functionality.
+\end{itemize}
+
+Outside of the core libraries, it offers libraries for classification, feature tracking and video manipulation among many other features [REF http://vxl.sourceforge.net/]. But missing from this is support for machine learning, also Java Native Interfaces support is also not available and this is necessary for execution on Android.
+
+\url{http://vxl.sourceforge.net/}
+
+
+\subsubsection{LTI-Lib}
+LTI-Lib is a C++ based object orientated image processing and computer vision library. It has been used in research projects ranging from robotics to object and gesture recognition. It is developed to run on both Linux and Windows based architectures, to do it has encapsulated much of the OS specific functionality to make it portable. It provides functionality in four main areas Linear algebra, Classification and Clustering, Image Processing and Visualisation and Drawing tools.
+
+At this time there appears to be no support for Java Native Interfaces (JNI) and is lacking machine learning functionality. This project is actively maintained and provides very good documentation.
+ 
+\url{http://ltilib.sourceforge.net/doc/homepage/index.shtml}
+
+
+\subsubsection{OpenCV}
+\url{http://opencv.willowgarage.com}
 
 \subsection{Techniques}
 
