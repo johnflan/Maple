@@ -25,6 +25,11 @@ eLinux.org Embedded Linux~Wiki.
 \newblock Android kernel features.
 \newblock \url{http://elinux.org/Android_Kernel_Features}.
 
+\bibitem{openCV11}
+Willow Garage.
+\newblock Opencv.
+\newblock \url{http://www.willowgarage.com/pages/software/opencv}, 2011.
+
 \bibitem{feili10}
 Prof. Fei-Fei Li.
 \newblock Cs 223b: Introduction to computer vision.
@@ -60,6 +65,13 @@ Frank C.~Keil Robert Andrew~Wilson.
 Rick Rogers, John Mombardo, Zigurd Mednieks, and Blake Meike.
 \newblock {\em Android application development}.
 \newblock O'Reilly, 2009.
+
+\bibitem{utkarsh10}
+Utkarsh Sinha.
+\newblock Opencv vs vxl vs lti: Performance test.
+\newblock
+  \url{http://www.aishack.in/2010/07/opencv-vs-vxl-vs-lti-performance-test},
+  2010.
 
 \bibitem{vbgoggles10}
 Dean Takahashi.

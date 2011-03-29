@@ -1,0 +1,33 @@
+\chapter{Leaf Identification}
+
+\section{Introduction}
+In this chapter we discuss the mechanics of leaf identification exploring two different approaches and evaluating the success or otherwise of both.
+
+For this stage of the project it is easier to develop the vision software using standard Java on the desktop instead of in the Android environment. Because the same OpenCV API will be used it is easy to port the software and techniques to Android after they are proven successful. This should offer an easier development path as we don't have to manage the extra level of complexity involved in deploying to a virtual or physical environment. 
+
+\colorbox{red}{not sure if this is really identification or classification, leaning towards classification}
+
+\section{Algorithmic Approach}
+This approach revolves around extracting certain features from an image, such as edges, colour, textures, contours, etc. and creating a model to match that leaf type.
+
+It is important to keep the number of transformations to the image minimal in identifying the leaf, as this project is targeting a resource starved environment. Also, the images processing in Android application will be required to process a number of frames per second to provide a sense of real-time feedback to the user.
+
+Utilising colour information in the classification process may offer no great benefit, this due to the variance in colours across different Android devices, time of day and other lighting in the environment. Discarding this extra information at the earliest possible stage will minimise the memory usage and processing required.
+
+\colorbox{red}{API differs in the NativeViewer}
+
+\colorbox{red}{external ref for colour}
+
+Down-sampling
+
+\subsection{Threshold}
+pg 138
+
+\subsection{Edge detection}
+pg 153
+Canny 
+
+\subsection{Contours}
+pg 251 opencv
+
+\section{Machine Learning Approach}

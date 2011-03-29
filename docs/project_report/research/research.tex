@@ -256,8 +256,17 @@ At this time there appears to be no support for Java Native Interfaces (JNI) and
 
 
 \subsubsection{OpenCV}
+Initially created by Intel and currently maintained by the robotics company Willow Garage, OpenCV is designed for real-time computer vision and is heavily used in robotics. The library is well known for its inclusion in Stanley an autonomous off-road vehicle which was Stanford University's winning entrant in the two million dollar DARPA Grand Challenge \cite{openCV11}. 
+
+A C based library of over five hundred common image processing function which importantly includes statistical machine learning modules. In tests it has been proven considerably more performant than the other libraries investigated across a variety of tasks \cite{utkarsh10}. OpenCV provides C++ and Java based interfaces and the project recently added Android support. In addition to this there is an active community of users, good documentation and is widely used in academia for teaching computer vision.
+
 \url{http://opencv.willowgarage.com}
 
-\subsection{Techniques}
+After all the libraries were considered, OpenCV was selected due to its performance, documentation, machine learning modules and its existing support for the Android platform.
 
-\section{Focus}
+\subsection{Identification Approaches}
+
+There appear to be two distinct approaches available in developing a vision mechanism to identify leaf types. The first being a largely manual approach were edge detection is performed on the image, and with this enhanced image information about the shape of the leaf is extracted and compared against a database of leaf shapes. Secondly the machine learning approach involves providing large numbers of images with some containing the leaf type in question and others without any leaves, with sufficient training a model should be developed to successfully identify the leaf type.
+
+At this stage it is not clear which approach will prove to be the most successful, both in terms of accuracy and performance on a resource restricted environment. This will be explored further in the Leaf Identification chapter.
+
