@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="libs/javacpp.jar"/>
+	<classpathentry kind="lib" path="libs/javacv-android-arm.jar"/>
+	<classpathentry kind="lib" path="libs/javacv-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/javacv-linux-x86.jar"/>
+	<classpathentry kind="lib" path="libs/javacv-macosx-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/javacv-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/javacv-windows-x86.jar"/>
+	<classpathentry kind="lib" path="libs/javacv.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
