@@ -12,10 +12,23 @@ public class ContourProcessor {
 	
 	//CvSeq contour = new CvSeq(null);
 	CvMemStorage storage = CvMemStorage.create();
+	int numOfContours;
 	
-	public void detect(IplImage binaryImage, CvSeq contour){
+	public void detect(IplImage binaryImage, CvSeq contours){
 		
-		cvFindContours(binaryImage, storage, contour, Loader.sizeof(CvContour.class), CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+		cvClearMemStorage(storage);
+		numOfContours = cvFindContours(binaryImage, storage, contours, Loader.sizeof(CvContour.class), CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+		System.out.println("Number of contours detected:" + numOfContours);
 		
+	}
+	
+	public void draw(IplImage rawImage, CvSeq contours){
+		
+		//first cvScalar value external colour of contour: Green ***
+		//second cvScalar hole colour: Blue
+		
+		if (!contours.isNull()){
+			cvDrawContours(rawImage, contours, cvScalar(0, 255, 47, 255), cvScalar(255, 0, 0, 255), 100, 1, 8);
+		}
 	}
 }

@@ -22,7 +22,9 @@ Early in the process we can combine the BGR (Blue, Green, Red) colour channels i
 
 Just to briefly describe the the gain from converting and storing the image in grayscale, we will analyse how the image is stored in OpenCV. The IplImage type that OpenCV operates with stores an image as a number of bitmaps, one for each channel of color information. For this project we define that each pixel will have a color depth of 255 separate colors and this is stored in a 8bit unsigned structure, giving 1 byte per pixel \cite{morganIPL06}.
 
-For the video stream being analysed the camera is returning an image size of 640 x 480 pixels and 3 channels of colour which is 307,200 pixels by 3 channels giving 921,600 pixels which is 921,600 bytes or 900 kilobytes per frame.  If we are to convert the image to a single channel we are now dealing with 307,200 pixels which is equivalent to 300 kilobytes per frame. This equates to a considerable memory saving, especially when we see as many as 24 frames per second being processed by OpenCV.
+For the video stream being analysed in the test environment the camera is returning an image size of 640 x 480 pixels and 3 channels of colour which is 307,200 pixels by 3 channels giving 921,600 pixels which is 921,600 bytes or 900 kilobytes per frame.  If we are to convert the image to a single channel we are now dealing with 307,200 pixels which is equivalent to 300 kilobytes per frame. This equates to a considerable memory saving, especially when we see as many as 24 frames per second being processed by OpenCV.
+
+The actual image size returned depends on the model of the device, for example the device being used for this project is the Google Nexus One which is capable of capturing 720 x 480 pixels at 20 frames per second.
 
 This analysis slightly simplistic as the IplImage type contains padding and metadata, but gives a good indication of the savings involved.
 
@@ -30,8 +32,18 @@ At this stage we are unable to provide an analysis of memory savings from sub-sa
 
 
 \subsection{Preparing the Image}
+The goal of preparing the image is two fold, firstly we need to perform some transformations to the image in order to separate the foreground object from the background, secondly the cvFindContours() function requires a binary image as input.
 
 \subsubsection{Threshold}
+Figure \ref{preprocessing}
+
+\begin{figure}[h!]
+\centering
+    \includegraphics[width=1.0\textwidth]{leaf_identification/images/convert_to_binary.png}
+    \caption{Binary image conversion, Canny Edge detection (left) and Adaptive Threshold (right)}%
+    \label{preprocessing}
+\end{figure}
+
 pg 138
 
 \subsubsection{Edge detection}
@@ -39,6 +51,8 @@ pg 153
 Canny 
 
 \subsection{Detecting Contours}
+A contour is a list of points that represent, in one way or another, a curve in an image \cite{bradski08}. 
+
 pg 251 opencv
 
 \section{Machine Learning Approach}

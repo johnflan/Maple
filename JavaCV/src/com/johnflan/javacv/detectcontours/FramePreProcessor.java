@@ -15,8 +15,8 @@ public class FramePreProcessor {
     
     // Edge Detection Variables
 	int aperature_size = N;
-	double lowThresh = 10;
-	double highThresh = 50;
+	double lowThresh = 400;
+	double highThresh = 1255;
 	
 	public void prepareImage(IplImage inFrame, IplImage outFrame){
 
@@ -37,7 +37,17 @@ public class FramePreProcessor {
 	public void applyThreshold(IplImage inFrame, IplImage outFrame){
 
 		// do some threshold for wipe away useless details
-        cvThreshold(inFrame, outFrame, 64, 255, CV_THRESH_BINARY);
+        //cvThreshold(inFrame, outFrame, 64, 255, CV_THRESH_BINARY);
+        //cvAdaptiveThreshold(inFrame, outFrame, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, 71, 15);
+		//500 contracts the selected area
+		cvAdaptiveThreshold(inFrame, outFrame, 500, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, 255, 5);
+		
+	}
+
+
+	public void dilate(IplImage frameProcessed) {
+		
+		cvDilate(frameProcessed, frameProcessed, null, 3);
 		
 	}
 

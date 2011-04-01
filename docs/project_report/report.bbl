@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{bradski08}
+Gary Bradski and Adrian Kaehler.
+\newblock {\em Learning OpenCV}.
+\newblock O'Reilly, 2008.
+
 \bibitem{googioanatomy08}
 Patrick Brady.
 \newblock Anatomy & physiology of an android.
