@@ -1,12 +1,15 @@
 package com.johnflan.javacv.detectcontours;
 
 
+import java.awt.Toolkit;
+
 import com.googlecode.javacpp.Loader;
 import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core.CvBox2D;
 import com.googlecode.javacv.cpp.opencv_core.CvContour;
 import com.googlecode.javacv.cpp.opencv_core.CvMemStorage;
+import com.googlecode.javacv.cpp.opencv_core.CvSeq;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
@@ -20,17 +23,16 @@ public class DetectContours {
 
 	public static void main(String[] args) throws Exception {
 		
-        //!!OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
-        //!!grabber.start();
+        OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
+        grabber.start();
         
-        //!!IplImage frameRaw = grabber.grab();
-        IplImage frameRaw = cvLoadImage(
-                "/home/johnflan/workspace/Maple/docs/misc_images/testLeaf.png",
-                CV_LOAD_IMAGE_UNCHANGED);
+        IplImage frameRaw = grabber.grab();
+        //!!IplImage frameRaw = cvLoadImage(
+        //!!        "/home/johnflan/workspace/Maple/docs/misc_images/testLeaf.png",
+        //!!        CV_LOAD_IMAGE_UNCHANGED);
         
         
         IplImage frameProcessed = cvCreateImage( cvGetSize(frameRaw), IPL_DEPTH_8U, 1 );
-        IplImage frameTemp; 
         
         CanvasFrame canvasFramePre = new CanvasFrame("Preprocessing");
         canvasFramePre.setCanvasSize(frameRaw.width(), frameRaw.height());
@@ -42,93 +44,90 @@ public class DetectContours {
     	FramePreProcessor framePreProcessor = new FramePreProcessor();
     	ContourProcessor contourProcessor = new ContourProcessor();
     	
-    	boolean alternateProcessingType = false;
+    	CvMemStorage storage = CvMemStorage.create();
+    	
     	CvSeq contourPtr = new CvSeq(null);
+    	CvSeq contourLow;
+    	
         
+    	//Load Sample contour
+    	CvSeq sampleLeaf = contourProcessor.loadTestLeafContour();
+    	CvSeq sampleLeafLow = cvApproxPoly(sampleLeaf, Loader.sizeof(CvContour.class), storage,CV_POLY_APPROX_DP,1,1);
+    	//contourProcessor.printContourPoints(sampleLeafLow);
         
-        //!!while (canvasFramePre.isVisible() && canvasFramePost.isVisible() &&  (frameRaw = grabber.grab()) != null) {
-        	
-    		
+        while (canvasFramePre.isVisible() && canvasFramePost.isVisible() &&  (frameRaw = grabber.grab()) != null) {
+
         	//convert to grayscale and equalise levels
         	framePreProcessor.prepareImage(frameRaw, frameProcessed);	
         	framePreProcessor.dilate(frameProcessed);
-        	
-    		//alternate type of binary conversion performed on each frame
-        	if (alternateProcessingType){
-        		framePreProcessor.detectEdges(frameProcessed, frameProcessed);
-        		alternateProcessingType = false;
-        	} else {
-        		framePreProcessor.applyThreshold(frameProcessed, frameProcessed);
-        		cvNot(frameProcessed, frameProcessed); //invert the image
-        		alternateProcessingType = true;
-        	}
-        	
-        	
-        	
+    		framePreProcessor.applyThreshold(frameProcessed, frameProcessed);
+    		cvNot(frameProcessed, frameProcessed); //invert the image
+
+    		canvasFramePost.showImage(frameProcessed);
         	//Detect and Draw contours
-        	contourProcessor.detect(cvCloneImage(frameProcessed), contourPtr);
-        	contourProcessor.draw(frameRaw, contourPtr);
+        	cvFindContours(cvCloneImage(frameProcessed), storage, contourPtr, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cvPoint(0, 0));
         	
-        	System.out.println("Contours: " + contourPtr.total());
+        	//Approx contours
+        	contourLow = cvApproxPoly(contourPtr, Loader.sizeof(CvContour.class), storage,CV_POLY_APPROX_DP,1,1);
         	
-        	while(contourPtr != null){
-        		frameTemp = cvCloneImage(frameRaw);
+        	
+        	for (; contourLow != null; contourLow = contourLow.h_next()){
+        		        		
+        		//CvScalar colour = CV_RGB( Math.random() * 255,  Math.random() * 255,  Math.random() * 255 );
+        		CvScalar colour = CV_RGB( 0,  255,  0 );
         		
-        		CvRect rect = cvBoundingRect(contourPtr, 1);
+        		//Find bounding box
+        		CvRect rect;
+        		CvPoint p1 = new CvPoint();
+        		CvPoint p2 = new CvPoint();
         		
-        		System.out.println("x: " + rect.x() + " y: " + rect.y());
-
+        		rect = cvBoundingRect(contourLow, 1);
         		
-        		cvRectangle(
-        				frameTemp, 
-        				cvPoint(rect.x(), rect.y()), 
-        				cvPoint(rect.width(), rect.height()), 
-        				cvScalar(0, 0, 255, 255), 
-        				2,
-        				CV_AA, 
-        				2
-        		);
+        		//If the width is less than 1/10 of the image width skip it
+        		if ((frameRaw.width() * .2) > rect.width() )
+        			continue;
         		
-        		canvasFramePre.showImage(frameTemp);
-        		contourPtr = contourPtr.h_next();
+        		
+        		//if (contourLow == null || sampleLeaf == null){
+        		//	System.out.println("Error contourLow or sampleLeaf contain null value");
+        		//	continue;
+        		//}
+        		
+        		double matchValue = cvMatchShapes(contourLow, sampleLeafLow, CV_CONTOURS_MATCH_I1, 0);
+        		//double matchValue = .1;
+        		
+        		if (matchValue > .05)
+        			continue;
+        		
+        		//Draw bounding box
+        		p1.x(rect.x());
+        		p2.x(rect.x() + rect.width());
+        		p1.y(rect.y());
+        		p2.y(rect.y() + rect.height());
+        		cvRectangle(frameRaw, p1, p2, colour, 2, 8, 0);
+        		      		
+        		//Draw contour 
+        		//cvDrawContours(frameRaw, contourLow, colour, colour, -1, 0,8, cvPoint(0,0));
+        		
+        		
+        		//----Calculate the objects features using hu moments
+        		//cvMoments(contourLow, moments, 0);
+        		//cvGetHuMoments(moments, humoments);
+        		
+    			System.out.println("Result from cvMatchShapes: " + matchValue);        		
         	}
-        	
-        	
-        	
-        	
-        	//Approximate the contour
-        	//CvMemStorage polyStorage = CvMemStorage.create();
-        	//cvApproxPoly(
-        	//		contourPtr,						//sequence of contours
-        	//		Loader.sizeof(CvContour.class),
-        	//		null, //polyStorage, 			//Container for approximated contours. If it is NULL, the input sequences' storage is used.
-        	//		CV_POLY_APPROX_DP,				//Type of approx
-        	//		10,							//precision of algo
-        	//		2								//0 for first contour 1 for all contours
-        	//);
-        	
-
-        	
-        	//if 
-        	//System.out.println("Contours: " + contourPtr.fir);
+        	     	
         	
         	canvasFramePre.showImage(frameRaw);
         	canvasFramePost.showImage(frameProcessed);
-
-        //!!}
+//        	cvReleaseMemStorage(storage); 
+//        	storage = new CvMemStorage();
+        	
+        }
         
-        //!!grabber.stop();
-        cvWaitKey(40000);
+        grabber.stop();
         canvasFramePre.dispose();
         canvasFramePost.dispose();
 
 	}
-
-	private static void draw2Dbox(IplImage image, CvBox2D box, CvScalar  colour) {
-
-		//cvEllipseBox(image.clone(), box, colour, 2, CV_AA, 2);
-		
-	}
-	
-
 }
