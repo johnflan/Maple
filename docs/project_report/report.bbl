@@ -40,6 +40,11 @@ Drew Morgan~(Vision Group).
 \newblock The iplimage structure.
 \newblock \url{http://www.comp.leeds.ac.uk/vision/opencv/iplimage.html}, 2006.
 
+\bibitem{kuntz09}
+Noah Kuntz.
+\newblock Opencv tutorial.
+\newblock \url{http://dasl.mem.drexel.edu/~noahKuntz/openCVTut5.html}, 209.
+
 \bibitem{feili10}
 Prof. Fei-Fei Li.
 \newblock Cs 223b: Introduction to computer vision.

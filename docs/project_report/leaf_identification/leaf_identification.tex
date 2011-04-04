@@ -35,53 +35,62 @@ At this stage we are unable to provide an analysis of memory savings from sub-sa
 
 Once an frame is retrieved from the camera’s sensor we must preprocess the image before attempting to classify features contained in the image. The goal of preparing the image is twofold, firstly we need to perform filtering to the image in order to separate the foreground objects from the background, and secondly the \emph{cvFindContours()} function requires a binary image as input.
 
-The order and configuration of these transforms that are applied to the frames are determined through best practices and  trial and error. Below we describe the transformations and the order in which they are utilised.
+The order and configuration of these transforms that are applied to the frames are determined through much experimentation, until reasonable  results are achieved. Below we describe the transformations and the order in which they are utilised.
 
 \begin{figure}
 \centering
     \includegraphics[width=1.0\textwidth]{leaf_identification/images/convert_to_binary.png}
     \caption{Binary image conversion, Canny Edge detection (left) and Adaptive Threshold (right)}%
     \label{preprocessing}
+    \colorbox{red}{replace with example of each stage}
 \end{figure}
 
 
-\subsubsection{Convert to grayscale (cvCvtColor)}
-As discussed earlier we attempt to optimise any processing by minimising both the memory and CPU utilisation. As colour information is unnecessary for this technique we remove it at the first available opportunity.
+\subsubsection{Convert to grayscale}
+As discussed earlier we attempt to optimise any processing by minimising both the memory and CPU utilisation. As colour information is unnecessary for this approach we remove it at the first available opportunity.
 
-\subsubsection{Histogram Equalization (cvEqualizeHist)}
-Image quality from mobile phone image sensors vary widely in quality, but one common problem that would make identifying shapes in an image difficult is the lack of contrast. With histogram equalisation we redistribute brightness across the range of the image, which in turn increases the contrast across the image \cite{http://dasl.mem.drexel.edu/~noahKuntz/openCVTut5.html#Step%203}.
+It would be also advisable at this stage to sub-sample the image to the smallest size possible while still achieving good matches.
 
-\subsubsection{Dilate (cvDilate)}
+\subsubsection{Histogram Equalization}
+The image quality from mobile phone sensors vary widely, but one common problem that would hinder the classification of shapes in an image is the lack of contrast. With histogram equalisation we redistribute brightness across the range of the image, expanding the dynamic range of the image which increases the contrast \cite{kuntz09}.
 
 
-\subsubsection{Adaptive Threshold (cvAdaptiveThreshold)}
-When applying a threshold filter to an image we are essentially making a decision to accept or reject a pixel based on a threshold value \cite{bradski08}. OpenCV provides a number of options for how the threshold is to be calculated, but for the purposes of this project we will simply apply a binary threshold.
+\subsubsection{Threshold}
+When applying a threshold filter to an image we are essentially making a decision to accept or reject a particular pixel based on a certain threshold value \cite{bradski08}. OpenCV provides a number of options for how the threshold is to be calculated, after experimentation it was found that adaptive threshold offered the best results.
 
-p. 138
+Adaptive threshold is a technique where the threshold value is variable, this threshold value is calculated as a weighted average from a predetermined pixel region around the current pixel.
 
 Once this transform is applied to the input image we are returned a binary version of that image which can then be used to find contours, we will discuss this further in the next section.
 
-Figure \ref{preprocessing}
+
+\subsubsection{Dilate}
+Once the image has been converted to a binary image, we apply a dilate transform to help minimise small clusters of pixels which may have not met the threshold in the middle of an identified shape. Applying the filter at this stage helps to provide a binary image with cleaner more identifiable shapes to the next stage of processing.
+
 
 \subsubsection{Other techniques}
-Canny Edge detection - pg 153
+After experimenting with a number of different techniques for creating a good quality binary representation of the raw image, the procedure outlined above was finalised on. But a number of other approaches are also quite valid and provide reasonable results, these include the use of Canny Edge detection, background subtraction and Sobel operators.
 
 
 \subsection{Identifying features}
+
+\colorbox{red}{replace with example of each stage}
+
+As seen in Figure \colorbox{red}{binary image}, we should now provided with a clean binary image of any objects captured by the sensor. We must now use some mechanism to capture the detected shapes and compare them to a store of pre-captured shapes in an efficient manner. 
+
 \subsubsection{Contours}
-A contour is a list of points that represent, in one way or another, a curve in an image \cite{bradski08}. 
+OpenCV provides a useful function called \emph{cvFindContours()} which maps boundaries in a binary image. A contour is a list of points that represent, a curve in an image \cite{bradski08}. We must be aware that the contours we are returned are those discovered in the image and due to lighting and other conditions may not represent the actual object.
 
-We concern ourselves with finding the contours of the image not of the actual object, due to lighting etc.
-
-Contour tree of contours and holes
-pg 251 opencv
-http://blog.damiles.com/?p=292
+The function returns a contour tree which describes the nested structure of all the contours found. This concept of which contour contains another maybe useful for certain forms of shape analysis. A individual contour is returned as a sequence of \emph{(x, y)} points that describe the edge of an object.
 
 
-\subsubsection{cvMatchShapes}
- getting SIGSEGV invalid memory reference
+\subsubsection{Polygon Approximations}
+Returned contours are are quite specific to the detected shape, which is heavily dependant on lighting conditions and other such external interferences. We apply a Polygon Approximation to the contour which helps to create a more generic representation of the shape correcting for defects in the image and the physical leaf. This also has the added advantage of minimising the number of points on the curve which decreases the signature of the shape, this is helpful later when storing the shape.
 
-\subsubsection{Hu Moments}
+\subsubsection{Shape Matching}
+OpenCV provides a function called \emph{cvMatchShapes()} which compares two shapes and determines if they are similar. This function matches the shapes using Hu Moments which we will talk about in a moment and returns a double indicating how closely the shapes match with 0.0 being a match.
+
+From exposing many different silhouettes of leaves a value of less than 0.2 can be considered to be a good match. However it is likely that with a larger database of leaf types to match against a more precise match may be required.
+
 
 \subsection{Storage and Retrieval}
 Possible to store grayscale image of each leaf and compare with cvMatchShapes but his would be very inefficent and not a viable solution for the project. (template matching - http://nashruddin.com/template-matching-in-opencv-with-example.html)
