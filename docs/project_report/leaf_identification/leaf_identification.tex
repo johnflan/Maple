@@ -32,27 +32,57 @@ At this stage we are unable to provide an analysis of memory savings from sub-sa
 
 
 \subsection{Preparing the Image}
-The goal of preparing the image is two fold, firstly we need to perform some transformations to the image in order to separate the foreground object from the background, secondly the cvFindContours() function requires a binary image as input.
 
-\subsubsection{Threshold}
-Figure \ref{preprocessing}
+Once an frame is retrieved from the camera’s sensor we must preprocess the image before attempting to classify features contained in the image. The goal of preparing the image is twofold, firstly we need to perform filtering to the image in order to separate the foreground objects from the background, and secondly the \emph{cvFindContours()} function requires a binary image as input.
 
-\begin{figure}[h!]
+The order and configuration of these transforms that are applied to the frames are determined through best practices and  trial and error. Below we describe the transformations and the order in which they are utilised.
+
+\begin{figure}
 \centering
     \includegraphics[width=1.0\textwidth]{leaf_identification/images/convert_to_binary.png}
     \caption{Binary image conversion, Canny Edge detection (left) and Adaptive Threshold (right)}%
     \label{preprocessing}
 \end{figure}
 
-pg 138
 
-\subsubsection{Edge detection}
-pg 153
-Canny 
+\subsubsection{Convert to grayscale (cvCvtColor)}
+As discussed earlier we attempt to optimise any processing by minimising both the memory and CPU utilisation. As colour information is unnecessary for this technique we remove it at the first available opportunity.
 
-\subsection{Detecting Contours}
+\subsubsection{Histogram Equalization (cvEqualizeHist)}
+Image quality from mobile phone image sensors vary widely in quality, but one common problem that would make identifying shapes in an image difficult is the lack of contrast. With histogram equalisation we redistribute brightness across the range of the image, which in turn increases the contrast across the image \cite{http://dasl.mem.drexel.edu/~noahKuntz/openCVTut5.html#Step%203}.
+
+\subsubsection{Dilate (cvDilate)}
+
+
+\subsubsection{Adaptive Threshold (cvAdaptiveThreshold)}
+When applying a threshold filter to an image we are essentially making a decision to accept or reject a pixel based on a threshold value \cite{bradski08}. OpenCV provides a number of options for how the threshold is to be calculated, but for the purposes of this project we will simply apply a binary threshold.
+
+p. 138
+
+Once this transform is applied to the input image we are returned a binary version of that image which can then be used to find contours, we will discuss this further in the next section.
+
+Figure \ref{preprocessing}
+
+\subsubsection{Other techniques}
+Canny Edge detection - pg 153
+
+
+\subsection{Identifying features}
+\subsubsection{Contours}
 A contour is a list of points that represent, in one way or another, a curve in an image \cite{bradski08}. 
 
-pg 251 opencv
+We concern ourselves with finding the contours of the image not of the actual object, due to lighting etc.
 
+Contour tree of contours and holes
+pg 251 opencv
+http://blog.damiles.com/?p=292
+
+
+\subsubsection{cvMatchShapes}
+ getting SIGSEGV invalid memory reference
+
+\subsubsection{Hu Moments}
+
+\subsection{Storage and Retrieval}
+Possible to store grayscale image of each leaf and compare with cvMatchShapes but his would be very inefficent and not a viable solution for the project. (template matching - http://nashruddin.com/template-matching-in-opencv-with-example.html)
 \section{Machine Learning Approach}
