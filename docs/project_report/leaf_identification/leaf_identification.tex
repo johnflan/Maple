@@ -3,14 +3,14 @@
 \section{Introduction}
 In this chapter we discuss the mechanics of leaf classification exploring two different approaches and evaluating the success or otherwise of both.
 
-For this stage of the project it is more productive to develop the vision software using Java SE on the desktop instead of in the Android environment. Because the OpenCV API will be used it is easy to port the techniques to Android after they are proven. This should offer an easier development path as we don't have to manage the extra level of complexity involved in deploying to a virtual or physical environment. 
+For this stage of the project it is more productive to develop the vision software using Java SE on the desktop instead of in the Android environment. As the same OpenCV library is being used both on the desktop and on Android, it should mean porting the techniques should be without difficulty. This should offer an easier development path as we don't have to manage the extra level of complexity involved in deploying to a virtual or physical environment. 
 
 
 \section{Algorithmic Approach}
 
 This approach revolves around extracting certain features from an image, such as edges, colour, textures, contours, etc. and creating a model to match that leaf type.
 
-It is important to keep the number of transformations performed on the individual image minimal as this project is targeting a resource starved environment. The Android application will also be required to display a number of frames per second to provide a sense of real-time feedback to the user, although this may be achieved by processing only every second or third frames.
+It is important to keep the number of transformations performed on the individual image minimal as this project is targeting a resource starved environment. The Android application will also be required to display a number of frames per second to provide a sense of real-time feedback to the user, although this may be achieved by processing only every second or third frame.
 
 In this section we will concentrate primarily on identifying shapes, which removes the necessity to store and manipulate large sized images and colour information. 
 
@@ -20,9 +20,9 @@ The concept being tested in this section is to perform a series of transformatio
 
 Early in the process we can combine the BGR (Blue, Green, Red) colour channels into a single grayscale channel and we may also sub-sample the image. These two optimisations will help minimise both CPU and memory utilisation.
 
-Just to briefly describe the the gain from converting and storing the image in grayscale, we will analyse how the image is stored in OpenCV. The IplImage type that OpenCV operates with stores an image as a number of bitmaps, one for each channel of color information. For this project we define that each pixel will have a color depth of 255 separate colors and this is stored in a 8bit unsigned structure, giving 1 byte per pixel \cite{morganIPL06}.
+Just to briefly describe the the gain from converting and storing the image in grayscale, we will analyse how the image is stored in OpenCV. The IplImage type that OpenCV operates with stores an image as a number of bitmaps, one for each channel of colour information. For this project we define that each pixel will have a colour depth of 256 separate colours and this is stored in a 8bit unsigned structure, giving 1 byte per pixel \cite{morganIPL06}.
 
-For the video stream being analysed in the test environment the camera is returning an image size of 640 x 480 pixels and 3 channels of colour which is 307,200 pixels by 3 channels giving 921,600 pixels which is 921,600 bytes or 900 kilobytes per frame.  If we are to convert the image to a single channel we are now dealing with 307,200 pixels which is equivalent to 300 kilobytes per frame. This equates to a considerable memory saving, especially when we see as many as 24 frames per second being processed by OpenCV.
+For the video stream being analysed in the test environment the camera is returning an image size of 640 x 480 pixels and 3 channels of colour which is 307,200 pixels by 3 channels giving 921,600 pixels which is 921,600 bytes or 900 kilobytes per frame.  If we are to convert the image to a single channel we are now dealing with 307,200 pixels which is equivalent to 300 kilobytes per frame. This equates to a considerable memory saving, especially when we see as many as 24 frames per second being processed.
 
 The actual image size returned depends on the model of the device, for example the device being used for this project is the Google Nexus One which is capable of capturing 720 x 480 pixels at 20 frames per second.
 
@@ -33,9 +33,9 @@ At this stage we are unable to provide an analysis of memory savings from sub-sa
 
 \subsection{Preparing the Image}
 
-Once an frame is retrieved from the camera’s sensor we must preprocess the image before attempting to classify features contained in the image. The goal of preparing the image is twofold, firstly we need to perform filtering to the image in order to separate the foreground objects from the background, and secondly the \emph{cvFindContours()} function requires a binary image as input.
+Once an frame is retrieved from the camera’s sensor we must preprocess the image before attempting to classify features contained in the image. The goal of preparing the image is twofold, firstly we need to perform filtering on the image in order to separate the foreground objects from the background, and secondly the \emph{cvFindContours()} function requires a binary image as input.
 
-The order and configuration of these transforms that are applied to the frames are determined through much experimentation, until reasonable  results are achieved. Below we describe the transformations and the order in which they are utilised.
+The order and configuration of these transforms that are applied to the frames have been determined through experimentation until a reasonable result was achieved. Below we describe the transformations and the order in which they are utilised.
 
 \begin{figure}
 \centering
@@ -68,30 +68,38 @@ Once the image has been converted to a binary image, we apply a dilate transform
 
 
 \subsubsection{Other techniques}
-After experimenting with a number of different techniques for creating a good quality binary representation of the raw image, the procedure outlined above was finalised on. But a number of other approaches are also quite valid and provide reasonable results, these include the use of Canny Edge detection, background subtraction and Sobel operators.
+After experimenting with a number of different techniques for creating a good quality binary representation of the raw image, the procedure outlined above was settled on. But a number of other approaches are also quite valid and provide reasonable results, these include the use of Canny Edge detection, background subtraction and Sobel operators.
 
 
 \subsection{Identifying features}
 
 \colorbox{red}{replace with example of each stage}
 
-As seen in Figure \colorbox{red}{binary image}, we should now provided with a clean binary image of any objects captured by the sensor. We must now use some mechanism to capture the detected shapes and compare them to a store of pre-captured shapes in an efficient manner. 
+As seen in Figure \colorbox{red}{binary image}, we should now be provided with a clean binary image. We must now use some mechanism to capture the detected shapes and compare them to a store of pre-captured shapes in an efficient manner. 
 
 \subsubsection{Contours}
-OpenCV provides a useful function called \emph{cvFindContours()} which maps boundaries in a binary image. A contour is a list of points that represent, a curve in an image \cite{bradski08}. We must be aware that the contours we are returned are those discovered in the image and due to lighting and other conditions may not represent the actual object.
+OpenCV provides the useful function \emph{cvFindContours()} which maps boundaries in a binary image. A contour is essentially a list of points that represent a curve in an image \cite{bradski08}. We must be aware that the contours returned are those discovered in the image and due to lighting and other conditions may not represent the actual object.
 
-The function returns a contour tree which describes the nested structure of all the contours found. This concept of which contour contains another maybe useful for certain forms of shape analysis. A individual contour is returned as a sequence of \emph{(x, y)} points that describe the edge of an object.
+The function returns a contour tree which describes the nested structure of all the contours found. This concept of contours containing another maybe useful for certain forms of shape analysis. A individual contour is returned as a sequence of \emph{(x, y)} points that describe the edge of an object.
 
 
 \subsubsection{Polygon Approximations}
-Returned contours are are quite specific to the detected shape, which is heavily dependant on lighting conditions and other such external interferences. We apply a Polygon Approximation to the contour which helps to create a more generic representation of the shape correcting for defects in the image and the physical leaf. This also has the added advantage of minimising the number of points on the curve which decreases the signature of the shape, this is helpful later when storing the shape.
+The returned contours are quite specific to that detected shape, which is heavily dependant on lighting conditions and other such external interferences. We apply a Polygon Approximation to the contour which helps to create a more generic representation of the shape correcting for defects in the image and the physical leaf. This also offers the added advantage of minimising the number of points on the curve which decreases the signature of the shape, this is helpful later when storing the shape.
 
 \subsubsection{Shape Matching}
-OpenCV provides a function called \emph{cvMatchShapes()} which compares two shapes and determines if they are similar. This function matches the shapes using Hu Moments which we will talk about in a moment and returns a double indicating how closely the shapes match with 0.0 being a match.
+OpenCV provides a function called \emph{cvMatchShapes()} which compares two shapes and determines how similar they are. This function matches the shapes using Hu moment's which we will discuss in a moment and returns a value indicating how closely the shapes match with 0 being a match.
 
-From exposing many different silhouettes of leaves a value of less than 0.2 can be considered to be a good match. However it is likely that with a larger database of leaf types to match against a more precise match may be required.
+From exposing many different silhouettes of leaves a value of less than 0.2 can be considered to be a good match. However it is likely that with a larger database of leaf types to compare a more precise match may be required.
 
+An image moment defines a gross characteristic of a contour which is calculated from the integral of all the pixels in the contour. These moment’s can be used to compare two contours, but will not match contours of the same shape but of different sizes or rotation. Hu invariant moments provide the ability to match shapes regardless of their size, rotation or reflection.
+
+\subsubsection{Other techniques}
+\colorbox{red}{Freeman Chain Codes} histogram - minor rotation invarience
 
 \subsection{Storage and Retrieval}
-Possible to store grayscale image of each leaf and compare with cvMatchShapes but his would be very inefficent and not a viable solution for the project. (template matching - http://nashruddin.com/template-matching-in-opencv-with-example.html)
+To describe a leaf before applying polygon approximations we see in the region of 700 Cartesian points, \colorbox{red}{how may after??}. Efficient lookup and storage of these leaf signatures is going to prove to be a difficult task.
+
+For this project the approach used was to load a flat file of contours into memory, storing this form of data in a relational structure would be massively inefficient.
+
+It is clear that as the size of the library increases a lookup mechanism would be required, removing the need to store all contours in memory.
 \section{Machine Learning Approach}
