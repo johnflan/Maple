@@ -2,6 +2,8 @@ package com.johnflan.javacv.detectcontours;
 
 
 import java.awt.Toolkit;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.googlecode.javacpp.Loader;
 import com.googlecode.javacv.CanvasFrame;
@@ -50,10 +52,18 @@ public class DetectContours {
     	CvSeq contourLow;
     	
         
-    	//Load Sample contour
-    	CvSeq sampleLeaf = contourProcessor.loadTestLeafContour();
-    	CvSeq sampleLeafLow = cvApproxPoly(sampleLeaf, Loader.sizeof(CvContour.class), storage,CV_POLY_APPROX_DP,1,1);
-    	//contourProcessor.printContourPoints(sampleLeafLow);
+    	//Load Sample contours
+    	//CvSeq sampleLeaf = contourProcessor.loadTestLeafContour();
+    	Map<String, CvSeq> leafSet = contourProcessor.loadTestLeaves();
+    	
+    	Iterator leafItr = leafSet.entrySet().iterator();
+		
+		while (leafItr.hasNext()){
+			Map.Entry<String, CvSeq> leaf = (Map.Entry)leafItr.next();
+    	
+			leaf.setValue( cvApproxPoly( (CvSeq) leaf.getValue(), Loader.sizeof(CvContour.class), storage,CV_POLY_APPROX_DP,1,1) );
+			//contourProcessor.printContourPoints(sampleLeafLow);
+		}
         
         while (canvasFramePre.isVisible() && canvasFramePost.isVisible() &&  (frameRaw = grabber.grab()) != null) {
 
@@ -93,10 +103,30 @@ public class DetectContours {
         		//	continue;
         		//}
         		
-        		double matchValue = cvMatchShapes(contourLow, sampleLeafLow, CV_CONTOURS_MATCH_I1, 0);
+        		
+        		leafItr = leafSet.entrySet().iterator();
+        		double matchValue = 100;
+        		String matchName = "";
+        		
+        		while (leafItr.hasNext()){
+        			Map.Entry<String, CvSeq> leaf = (Map.Entry)leafItr.next();
+        			
+        			double tmpMatchValue = cvMatchShapes(contourLow, leaf.getValue(), CV_CONTOURS_MATCH_I1, 0);
+
+
+        			if (tmpMatchValue <= matchValue){
+        				
+        				matchValue = tmpMatchValue;
+        				matchName = leaf.getKey();
+        			}
+        			
+        			//contourProcessor.printContourPoints(sampleLeafLow);
+        		}
+        		
+        		//double matchValue = cvMatchShapes(contourLow, sampleLeafLow, CV_CONTOURS_MATCH_I1, 0);
         		//double matchValue = .1;
         		
-        		if (matchValue > .05)
+        		if (matchValue > .04)
         			continue;
         		
         		//Draw bounding box
@@ -114,7 +144,7 @@ public class DetectContours {
         		//cvMoments(contourLow, moments, 0);
         		//cvGetHuMoments(moments, humoments);
         		
-    			System.out.println("Result from cvMatchShapes: " + matchValue);        		
+    			System.out.println("Found a " + matchName + " leaf, with a value of: " + matchValue);        		
         	}
         	     	
         	

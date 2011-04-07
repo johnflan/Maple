@@ -1,9 +1,18 @@
 package com.johnflan.javacv.detectcontours;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.googlecode.javacpp.Loader;
+import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.cpp.opencv_core.CvContour;
 import com.googlecode.javacv.cpp.opencv_core.CvMemStorage;
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
+import com.googlecode.javacv.cpp.opencv_core.CvScalar;
 import com.googlecode.javacv.cpp.opencv_core.CvSeq;
 import com.googlecode.javacv.cpp.opencv_core.CvSeqReader;
 import com.googlecode.javacv.cpp.opencv_core.CvSeqWriter;
@@ -105,6 +114,60 @@ public class ContourProcessor {
 			System.out.println(point);
 		}
 		
+	}
+
+	public Map<String, CvSeq> loadTestLeaves() {
+		Map<String, CvSeq> leafSet = new HashMap<String, CvSeq>();
+		Map<String, String>  fileNames = new HashMap<String, String>();
+
+		fileNames.put("Maple", "/home/johnflan/workspace/Maple/docs/misc_images/testimg/leaf.png");
+		//fileNames.put("Green Ash", "/home/johnflan/workspace/Maple/docs/misc_images/testimg/green_ash.png");
+		//fileNames.put("Horse Chestnut Buckeye", "/home/johnflan/workspace/Maple/docs/misc_images/testimg/horse_chestnut_buckeye.png");
+		//fileNames.put("White Birch", "/home/johnflan/workspace/Maple/docs/misc_images/testimg/white_birch.png");
+		//fileNames.put("Twig", "/home/johnflan/workspace/Maple/docs/misc_images/testimg/twig1.png");
+		
+		
+		Iterator it = fileNames.entrySet().iterator();
+		
+		while (it.hasNext()){
+			Map.Entry<String, String> file = (Map.Entry) it.next();
+			
+			IplImage frameRaw = cvLoadImage(file.getValue(), CV_LOAD_IMAGE_UNCHANGED);
+			
+			if (frameRaw.isNull())
+				continue;
+			
+			IplImage frameProcessed = cvCreateImage( cvGetSize(frameRaw), IPL_DEPTH_8U, 1 );
+			
+			CvMemStorage storage = CvMemStorage.create();
+			CvSeq contour = new CvSeq();
+			
+			FramePreProcessor framePreProcessor = new FramePreProcessor();
+			
+			framePreProcessor.prepareImage(frameRaw, frameProcessed);	
+	    	framePreProcessor.dilate(frameProcessed);
+	    	
+	    	framePreProcessor.applyThreshold(frameProcessed, frameProcessed);
+			cvNot(frameProcessed, frameProcessed); //invert the image
+			
+			cvFindContours(cvCloneImage(frameProcessed), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cvPoint(0, 0));
+			
+			CvScalar colour = CV_RGB( 0,  255,  0 );
+			CanvasFrame canvasFramePre = new CanvasFrame("Loading");
+	        canvasFramePre.setCanvasSize(frameRaw.width(), frameRaw.height());
+	        cvDrawContours(frameRaw, contour, colour, colour, -1, 0,8, cvPoint(0,0));
+	        canvasFramePre.showImage(frameRaw);
+	        canvasFramePre.dispose();
+
+			if (!contour.isNull())
+				leafSet.put(file.getKey(), contour);
+
+		}
+		
+		
+
+
+		return leafSet;
 	}
 
 }
