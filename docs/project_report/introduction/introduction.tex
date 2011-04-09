@@ -1,13 +1,13 @@
 \chapter{Introduction and Objectives}
 
 \section{General Introduction}
-This project intends to investigate the possibility of performing image analysis or more specifically object recognition on mobile platforms. For this project the class of objects that we are concerned with are tree leaves. This report will attempt to document the steps necessary to create a computer program to process image data taken directly from a devices camera and attempt to identify the class of tree it comes from purely based on analysis of the photographic image.
+This project investigates the possibility of performing image analysis or more specifically object recognition on mobile platforms. For this project the class of objects that we are concerned with are tree leaves. This report will attempt to document the steps necessary to create a computer program to process image data taken directly from a device's camera and attempt to identify the class of tree it comes from purely based on analysis of the photographic image.
 
-This is not a completely novel concept, as there are a number of software applications in the mobile space that attempt to solve this same problem. For example the Google Goggles\textsuperscript{\texttrademark} application attempts to identify objects in photographic images by downsampling the image and transmitting it to a remote data centre for processing. In this case the whole image is transmitted, this is done largely for two reasons. Firstly, the server side software attempts to identify any object in the image that has being previously indexed, therefore much more processing is involved. Secondly, this reliance on the cloud platform for processing is a key business interest for the company.
+This is not a completely novel concept, as there are a number of software applications in the mobile space that attempt to solve this same problem. For example the Google Goggles\textsuperscript{\texttrademark} application attempts to identify objects in photographic images by downsampling the image and transmitting it to a remote data centre for processing. In this case the whole image is transmitted, this is done largely for two reasons. Firstly, the server side software attempts to identify any object in the image that has been previously indexed, therefore much more processing is involved. Secondly, this reliance on the cloud platform for processing is a key business interest for the company.
 
-While this transmission of data for remote processing is acceptable for users based in well connected areas, more remote users may face difficulties with mobile networks offering only degraded data rates in these locations. This solution will explore the possibility of performing most or all of this processing on the mobile device while relying less on access to mobile data networks.
+While this transmission of data for processing in a server farm is acceptable for users located in well-connected areas, more remote users may face difficulties with mobile networks offering only degraded data rates in these locations. This solution will explore the possibility of performing most or all of this processing on the mobile device while relying less on access to mobile data networks.
 
-The key to the solution is to perform as much analysis of the image on the local hardware as possible this would enable the device to act with a minimal reliance on the data network. This maybe possible by either storing a pre-computed database of leaf characteristics on the device or alternatively transmitting some small fingerprint extracted from the photographic image and transmitting it to a remote service to identify the leaf.
+The key to the solution is to perform as much analysis of the image on the local hardware as possible. This would enable the device to act with a minimal reliance on the data network. This maybe possible by either storing a pre-computed database of leaf characteristics on the device or alternatively transmitting some small fingerprint extracted from the photographic image and transmitting it to a remote service to identify the leaf.
 
 
 \section{Motivating Factors}
@@ -17,7 +17,7 @@ In addition to exploring the capabilities of such devices, this project aims to 
 
 In recent years the adoption of what are commonly referred to as smart phones has exploded at an ever increasing rate. Canalys a technology market data firm stated that in the fourth quarter of 2010 over 100 million smart phones were sold. Their analysis goes on to state that Google's Android has 33\% of the market with Nokia's Symbian trailing with a 31\% share \cite{canalys11}.
 
-The ubiquity of these devices alone make them an interesting platform to develop for, but they also provide a number of challenges not encountered when writing software for other types of systems. These challenges include extreme power management, high latencies and unreliability of network connectivity and unique form of user interaction to name but a few.
+The ubiquity of these devices alone make them an interesting platform to develop for, but they also provide a number of challenges not encountered when writing software for other types of systems. These challenges include extreme power management, high latencies and unreliability of network connectivity and unique form of user interaction, to name but a few.
 
 As stated above by Canalys Google's Android operating system appears to be taking the lead in terms of adoption in this market, making it the natural choice when choosing which environment to develop this project on. This in turn will provide the writer with valuable experience writing software for the dominant mobile operating system.
 
@@ -26,7 +26,7 @@ One particularly interesting area of mobile development is writing performant so
 
 \section{Objectives of Proposed Work}
 
-The concept is to write a software program for a mobile platform that will attempt to identify which class of tree a photographed leaf originates. A user will startup the application on their smartphone and point it at the leaf, on clicking a button the phone will expose that image and begin attempting to identify the class of tree. When the software successfully identifies the tree the software will redirect the user to some knowledge source relating to that family of tree, for example Wikipedia.
+The concept is to write a software program for a mobile platform that will attempt to identify which class of tree a photographed leaf originates. A user will start up the application on their smartphone and point it at the leaf. On clicking a button the phone will expose that image and begin attempting to identify the class of tree. When the software successfully identifies the tree the software will redirect the user to some knowledge source relating to that family of tree, for example Wikipedia.
 
 A project of this type can be divided into two major components, the image processing mechanism and the mobile application. The image processing component will require a considerable portion of the time, and developing a successful solution will be difficult.
 

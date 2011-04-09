@@ -11,7 +11,7 @@ With the release of the Android operating system Google have been exploring a nu
 
 Google have also invested resources into the development of a visual search system which they call \textbf{Goggles}. Just like Voice Search, Goggles performs very little processing on mobile handset, instead opting to transmit the data to a back-end service for processing.
 
-Due to the commercial and proprietary nature of the product implementation details are hard to come across, but in August 2010 Google delivered a presentation at the Hot Chips conference in Stanford University that gives insight into some elements of the design of the service. During this talk Google discussed a number of interesting points, firstly due to level of processing involved and network latencies on current generation cellular networks a image search query takes in the region of about 6.5 seconds for the system to return a result to the handset. Google also broadly discussed the architecture of the back-end search processing, when an image is received by the remote server it is in parallel analysed by a number of engines. Each of these engines are tuned for extracting particular information from an image, for example they have a barcode, text, landmark, wine label and logo engine to name a few, currently it is estimated that a search is executed on 20 engines in parallel and each result is ranked with only the most confident being returned to the user \cite{vbgoggles10, sbs10}.
+Due to the commercial and proprietary nature of the product implementation details are hard to find, but in August 2010 Google delivered a presentation at the Hot Chips conference in Stanford University that gives insight into some elements of the design of the service. During this talk Google discussed a number of interesting points, firstly due to level of processing involved and network latencies on current generation cellular networks a image search query takes about 6.5 seconds for the system to return a result to the handset. Google also broadly discussed the architecture of the back-end search processing, when an image is received by the remote server it is in parallel analysed by a number of engines. Each of these engines are tuned for extracting particular information from an image, for example they have a barcode, text, landmark, wine label and logo engine to name a few, currently it is estimated that a search is executed on 20 engines in parallel and each result is ranked with only the most confident being returned to the user \cite{vbgoggles10, sbs10}.
 
 \begin{figure}[h!]
 \centering
@@ -42,12 +42,12 @@ Although processing audio data instead of image data, this system has many commo
 \item Fingerprinting of data from a sensor.
 \end{enumerate}
 
-As this is again a commercial product and we are limited in the information we can uncover relating to its operation. Although somewhat more information is available when compared to Google Goggles due to its founders publishing a paper relating to the design of the audio fingerprinting algorithm and a number of documents existing about the design of such software.
+As this is again a commercial product we are limited in the information we can uncover relating to its operation. However, somewhat more information is available when compared to Google Goggles due to its founders publishing a paper relating to the design of the audio fingerprinting algorithm and a number of documents existing about the design of such software.
 
 \subsection{ZXing Barcode Scanner}
 The final application analysed at this stage of the research is the ZXing Barcode Scanner which is based on the ZXing open-source multi-format barcode image scanning library \cite{zxingproject}. This application is capable of scanning all major bar-code types including UPC, EAN and QR on the mobile handset without network connectivity.
 
-When the application is started the user is presented with an on screen view finder for the camera which has a horizontal red line to help the user place the camera in the correct location for scanning UPC or EAN codes. When the software correctly focuses the camera it automatically recognises any valid bar-codes and proceeds to display the encoded data in a way valid for the type of bar-code. The user is presented with a number of options based on the type of code just scanned, for example if a UPC ISBN code has been scanned a button is displayed to search for the book online we see an example of this in Figure \ref{zxing_scanner}.
+When the application is started the user is presented with an on screen view finder for the camera which has a horizontal red line to help the user place the camera in the correct location for scanning UPC or EAN codes. When the software correctly focuses the camera it automatically recognises any valid bar-codes and proceeds to display the encoded data in a way valid for the type of bar-code. The user is presented with a number of options based on the type of code just scanned. For example, if a UPC ISBN code has been scanned a button is displayed to search for the book online. We see an example of this in Figure \ref{zxing_scanner}.
 
 \begin{figure}[h!]
 \centering
@@ -63,11 +63,11 @@ It is valuable to identify an application at this stage that is capable of perfo
 \section{Android Platform}
 As mentioned earlier in this report, the Google Android platform has gained considerable market penetration in the short few years since its release in 2008. A large number of manufacturers including Samsung, LG, Motorola, HTC and Sony Ericsson have been producing Android based handsets at a vast range of price points and configurations. This variety of available hardware coupled with development for the platform through the Java programming language makes it an appealing platform to develop for.
 
-Android is an open-source software stack designed for mobile devices it is developed by Google and the Open Handset Alliance and is maintained by the Android Open Source Project (AOSP). It consists of a modified Linux Kernel, Android Runtime also known as the Dalvik virtual machine, Libraries, Application Framework and a collection of Applications.
+Android is an open-source software stack designed for mobile devices. It is developed by Google and the Open Handset Alliance and is maintained by the Android Open Source Project (AOSP). It consists of a modified Linux Kernel, Android Runtime also known as the Dalvik virtual machine, Libraries, Application Framework and a collection of Applications.
 
 \subsection{Architecture}
 \subsubsection{Kernel}
-Android at its lowest level utilises a Linux 2.6 based kernel, listed below are some of the more major modifications \cite{elinuxandroidkernel}. Due to the level of modification, specifically changes to locking, the security model and the driver infrastructure this Android code is not part of the mainline kernel \cite{registerAndroidKernel10}. It is important to note that in the Android environment does not provide support for the full set of standard GNU libraries with glibc being a prime example, this may provide difficulty when porting projects to the environment.
+Android at its lowest level utilises a Linux 2.6-based kernel. Listed below are some of the more major modifications \cite{elinuxandroidkernel}. 
 
 \begin{itemize}
 \item IPC - Addition of CORBA-like IPC mechanism (Binder)
@@ -78,10 +78,14 @@ Android at its lowest level utilises a Linux 2.6 based kernel, listed below are 
 \item OOM - Out of memory handling modifications
 \end{itemize}
 
+
+Due to the level of modification, specifically changes to locking, the security model and the driver infrastructure, this Android code is not part of the mainline kernel \cite{registerAndroidKernel10}. It is important to note that the Android environment does not provide support for the full set of standard GNU libraries with glibc being a prime example. This may provide difficulty when porting projects to the environment.
+
+
 As we can see in Figure \ref{android_arch} the kernel provides core systems services such as memory, process, power and network management as well as abstracting the hardware away from the rest of the stack.
 
 \subsubsection{Native Libraries}
-Moving up the stack to the libraries section, Android provides a number of C/C++ based libraries which can been seen in Figure \ref{android_arch}. Much system wide functionality is implemented here, for example Surface Manager which manages the display subsystem and SQLlite which provides structured storage to installed applications. Also interestingly the web-browser rendering engine is provided as a library/service at this level which is done to enable as fast as possible rendering of content \cite{googioanatomy08}. 
+Moving up the stack to the libraries section, Android provides a number of C/C++ based libraries which can been seen in Figure \ref{android_arch}. Much system wide functionality is implemented here, for example Surface Manager which manages the display subsystem and SQLite which provides structured storage to installed applications. Also interestingly the web-browser rendering engine is provided as a library/service at this level which is done to enable as fast as possible rendering of content \cite{googioanatomy08}. 
 
 \colorbox{red}{Should I expand on the difference between services/libraries at this stage and Kernel Space/User Space}
 
@@ -97,13 +101,13 @@ Moving up the stack to the libraries section, Android provides a number of C/C++
 \end{figure}
 
 \subsubsection{Virtual Machine}
-Illustrated differently in Figure \ref{android_arch} but at the same level in the stack is the Dalvik JIT based process virtual machine and Harmony open-source Java class library. The Dalvik virtual machine is a crucial element is the Android stack, on-top of which all user facing code is executed.  The use of such a virtual machine enables the development of applications in a memory managed environment. Additionally as it is a process based virtual machine each process starts its own instance of the VM and depends on the system kernel for threading and low level memory management. In the case of a crashed or hung application the VM can be terminated without effect on other running applications or services.
+Illustrated differently in Figure \ref{android_arch} but at the same level in the stack is the Dalvik JIT based process virtual machine and Harmony open-source Java class library. The Dalvik virtual machine is a crucial element in the Android stack, on-top of which all user facing code is executed.  The use of such a virtual machine enables the development of applications in a memory managed environment. Additionally as it is a process-based virtual machine each process starts its own instance of the VM and depends on the system kernel for threading and low level memory management. In the case of a crashed or hung application the VM can be terminated without effect on other running applications or services.
 
-Dalvik is different from traditional VM’s in that it is register based and not stack based like the Java Virtual Machine. This register based approach uses in the region of 47\% less instructions but the executable size tends to be larger \cite{ehringerdalvik10}.
+Dalvik is different from traditional VM’s in that it is register based and not stack based like the Java Virtual Machine. This register based approach uses in the region of 47\% fewer instructions but the executable size tends to be larger \cite{ehringerdalvik10}.
 
-The Android developers have attempted to mitigate this larger executable size by create a new executable file format called dex. In a traditional Java application each class is compiled into a bytecode .class file and these files are zipped up to build a .jar file. When building an Android application these .class files are compiled into a single .dex executable. This enables space savings to be made by sharing data like literal constants and headers that would normally be duplicated across a number of .class files \cite{ehringerdalvik10}.
+The Android developers have attempted to mitigate this larger executable size by designing a new executable file format called dex. In a traditional Java application each class is compiled into a bytecode .class file and these files are zipped up to build a .jar file. When building an Android application these .class files are compiled into a single .dex executable. This enables space savings to be made by sharing data like literal constants and headers that would normally be duplicated across a number of .class files \cite{ehringerdalvik10}.
 
-This register based approach with dex format executable’s is optimised for battery based devices with constrained CPU and memory. 
+This register based approach with dex format executable’s is optimised for battery based-devices with constrained CPU and memory. 
 
 It is important to note that the Java Implementation does not utilise all of the established Java standards (Java SE, Java ME), which prevents compatibility among Java applications written for other environments.
 
@@ -122,7 +126,7 @@ Below we will briefly describe some of the key framework components.
 %less important for developers
 \item[Window Manager] Creates surface’s onto which the application may draw its UI (View).
 \item[Content Providers] Special types implemented by the system or by applications to enable data sharing across applications, common content providers include contacts, media store and call log.
-\item[View System] Provides a the infrastructure for building user interface components (buttons, text boxes etc.) and their associated event handling. The view system provides access to the components in a tree like structure, much like the HTML DOM concept.
+\item[View System] Provides the infrastructure for building user interface components (buttons, text boxes etc.) and their associated event handling. The view system provides access to the components in a tree like structure, much like the HTML DOM concept.
 \item[Package Manager] Enables access to various kinds of information about packages (applications) installed on the system.
 \item[Telephony Manager] Provides information to an application about the current state and availability of telephony services on the device. 
 \end{description}
@@ -130,11 +134,11 @@ Below we will briefly describe some of the key framework components.
 
 \subsection{Application Structure}
 
-Android applications are packed into an APK file, which essentially a collection of components that share a set of resources such as databases, file space and preferences as well as a Linux process \cite{googioappframework08}. Each of these components has a managed filecycle which is controlled by the Activity Manager.
+Android applications are packed into an APK file, which is essentially a collection of components that share a set of resources such as databases, file space and preferences as well as a Linux process \cite{googioappframework08}. Each of these components has a managed lifecycle which is controlled by the Activity Manager.
 
 \colorbox{red}{List key files in APK package}
 
-Android applications are a collection of Activities, Tasks and Processes this structure is illustrated in Figure \ref{activity_activities_tasks_processes}. An activity is regarded as a single concrete element of functionality which may not have any UI, where as a task is a collection of activities potentially across a number of applications which are used to complete some unit of work. This offers the developer the ability create new applications that can to knit together existing components to maximise reuse and minimise development time.
+Android applications are a collection of Activities, Tasks and Processes this structure is illustrated in Figure \ref{activity_activities_tasks_processes}. An activity is regarded as a single concrete element of functionality which may not have any UI, whereas a task is a collection of activities potentially across a number of applications which are used to complete some unit of work. This offers the developer the ability to create new applications that can to knit together existing components to maximise reuse and minimise development time.
 
 \begin{figure}[h!]
 \centering
@@ -144,14 +148,14 @@ Android applications are a collection of Activities, Tasks and Processes this st
 \end{figure}
 
 \subsubsection{Components}
-As we have seen Android application framework is heavily designed around the concept of components, this component model incorporates:
+As we have seen the Android application framework is heavily designed around the concept of components. This component model incorporates:
 
 \begin{itemize}
 \item Activity Components\\
 An Activity is often represented as a single screen but may also have no UI, and is regarded as a focused element of functionality. Each activity has its lifecycle managed by the Activity Manager.
 \item Service Components\\
-Used typically when some long-run task is required, they have no UI and will run indefinitely. These services may be started by an Activity, but they continue to run after the Activity has been closed.
-\item Intent Receiver Components 
+Used typically when some long run task is required, they have no UI and will run indefinitely. These services may be started by an Activity, but they continue to run after the Activity has been closed.
+\item Intent Receiver Components\\ 
 Listens for broadcast Intents and performs some action. These Intents may be broadcast by the system e.g. battery low, notify the arrival of a message etc. or Intents may originate from other applications to signify some change of state.
 \item Content Provider Component\\
 Provides specific data in your application to other applications, not generally used to share data within an application.
@@ -159,9 +163,9 @@ Provides specific data in your application to other applications, not generally 
 
 \subsubsection{Activities}
 
-In the Android Application Framework Applications are formed from a number of components named Activities, which are described as standalone units of functionality and may be instantiated by the user or the system. 
+In the Android Application Framework applications are formed from a number of components named Activities, which are described as standalone units of functionality and may be instantiated by the user or the system. 
 
-An Activity may interact with the user through a View or may interact with the system through the use of Intents. The lifecycle of an Activity is determined by the platform, giving the system the ability to terminate an Activity when resources becomes scarce or when an application has not been used recently. The Activity Manager also invokes methods on the Activity when its state has changed, these states are illustrated in Figure \ref{activity_lifecycle}. 
+An Activity may interact with the user through a View or may interact with the system through the use of Intents. The lifecycle of an Activity is determined by the platform, giving the system the ability to terminate an Activity when resources become scarce or when an application has not been used recently. The Activity Manager also invokes methods on the Activity when its state has changed. These states are illustrated in Figure \ref{activity_lifecycle}. 
 
 \begin{figure}[h!]
 \centering
@@ -172,9 +176,9 @@ An Activity may interact with the user through a View or may interact with the s
 
 \subsubsection{Intents}
 
-With this component based framework and in the extreme example of a Task made up of a number of Activities from different applications, a communication mechanism was required to bind all these Activities and Services together.
+With this component-based framework and in the extreme example of a Task made up of a number of Activities from different applications, a communication mechanism was required to bind all these Activities and Services together.
 
-The Android solution to this was the concept of an Intent, which eliminated the need to duplicate functionality in different applications, allowed functionality to be discovered and invoked on the fly and gave users the ability to replace units of functionality on the fly \cite{rogers09}. To quote the Android documentation “An Intent is a simple message object that represents an ”intention” to do something”. These Intents can be divided into two categories:
+The Android solution to this was the concept of an Intent, which eliminated the need to duplicate functionality in different applications, allowed functionality to be discovered and invoked on the fly, and gave users the ability to replace units of functionality as they wish \cite{rogers09}. To quote the Android documentation, an Intent is a simple message object that represents an 'intention' to do something. These Intents can be divided into two categories:
 
 \begin{itemize}
 \item Explicit Intents\\
@@ -183,19 +187,23 @@ Used to call Activities where the component to be launched is explicitly specifi
 Used when not specifying a particular component but where the systems resolves the best Activity to handle the request.
 \end{itemize}
 
-Included below is a code snipped which illustrates the ease with which an application can call system services, in this example calling a telephone number. In order to fire this event the application must have privileges to use telephony services and these must be accepted by the user when installing the application. Due to the nature of the Intent architecture it is important to remember that the system makes no guarantees as to answering a fired Intent.
+Included in Figure \ref{intent_code} is a code snippet which illustrates the ease with which an application can call system services, in this example calling a telephone number. In order to fire this event the application must have privileges to use telephony services and these must be accepted by the user when installing the application. Due to the nature of the Intent architecture it is important to remember that the system makes no guarantees as to answering a fired Intent.
 
+\begin{figure}[h!]
 \begin{lstlisting}
 Intent i = new Intent();
 i.setAction(Intent.ACTION_CALL);
 i.setData(Uri.parse("tel:" + phoneNumber));
 startActivity(i);
 \end{lstlisting}
+\caption{Code initalising an Intent}
+\label{intent_code}
+\end{figure}
 
 \subsection{Native Development Kit}
-The Android Application Framework as we have seen previously executes managed code in a in its own instance of a Dalvik virtual machine. This offers a number of advantages with the most prominent being architecture independence and the ability to manage memory, which is critical on a device with such limited resources. However, the downside to executing in a virutalised environment is a decreased level of performance due to the extra steps involved in converting the bytecode to native machine instructions. This performance penalty can be problematic for applications that are CPU bound, such forms of processing would include processing data from input devices such as microphones or cameras.
+The Android Application Framework as we have seen previously executes managed code in its own instance of a Dalvik virtual machine. This offers a number of advantages with the most prominent being architecture independence and the ability to manage memory, which is critical on a device with such limited resources. However, the downside to executing in a virutalised environment is a decreased level of performance due to the extra steps involved in converting the bytecode to native machine instructions. This performance penalty can be problematic for applications that are CPU bound. Such forms of processing would include processing data from input devices such as microphones or cameras.
 
-The Android Native Development Toolkit enables the developer to write portions of an application known as Native Activities in a native language such as C or C++. The Android documentation point's out that performance increases are not guaranteed and with the NDK there is an increase in application complexity, an increase in the filesize of the APK due to targeting multiple processor architectures and potentially introducing an instability to the system as the Native Activity exists outside the Activity lifecycle and memory management features.
+The Android Native Development Toolkit enables the developer to write portions of an application known as Native Activities in a native language such as C or C++. The Android documentation points out that performance increases are not guaranteed and with the NDK there is an increase in application complexity, an increase in the filesize of the APK due to targeting multiple processor architectures and potentially introducing an instability to the system as the Native Activity exists outside the Activity lifecycle and memory management features.
 
 \subsection{Development Enviroment}
 
@@ -205,7 +213,7 @@ A cross platform free development environment complements the Android platform. 
 \item The Eclipse IDE\\
 An open source cross platform IDE widely used in professional Java development.
 \item Sun/Oracle Java Development Kit (JDK)\\
-A set of tooling and run-time environment necessary for the development of Java based applications.
+Tooling and libraries necessary for the development of Java based applications.
 \item Android Software Developer's Kit (SDK)\\
 Consists of a number tools: Android emulator, AVD Manager- Android Virtual Device Manager, ADB - Android Debugger Bridge and DDMS - Dalvik Debug Monitor Server.
 \item Android Developer Tool (ADT) plug-in\\
@@ -213,14 +221,14 @@ An Eclipse IDE plug-in for Android development, which integrates building, launc
 \end{itemize}
 
 \subsubsection{Software Configuration Management}
-In order to manage and track changes to the project it will be necessary to use some form of SCM. Linus Torvals GIT is a popular, free and powerful distributed version control system. It is currently used to manage the Linux kernel and there are a number of companies such as \url{github.com} offering free repository hosting for projects such as this.
+In order to manage and track changes to the project it will be necessary to use some form of SCM. Linus Torvalds' GIT is a popular, free and powerful distributed version control system. It is currently used to manage the Linux kernel and there are a number of companies such as \url{github.com} offering free repository hosting for projects such as this.
 
 \section{Computer Vision}
 In essence Computer Vision refers to the act of processing images acquired from a camera to produce a representation of the real-world.  It is a relatively new field with its origins being traced back to an MIT undergraduate summer project in 1966 \cite{feili10}. Processing vision is a difficult problem even in the natural world where it has been estimated that ”more than half of the cerebral cortex in the Macaque monkey is involved in processing visual signals” \cite{wilson99}.
 
-Currently Vision is an area of much research, recently a number of new consumer products have been released with Vision capabilities. For example in the last year or so we have seen the release of the Microsoft Xbox Kinect which relies on tracking human gestures for interaction or the Sony Cyber-shot T70 with smile detection.  Vision techniques are also becoming important in adding semantic meaning and searchability to the many millions of still images and minutes of video being uploaded to sites like \url{YouTube.com} and \url{Facebook.com}. 
+Currently vision is an area of much research. Recently a number of new consumer products have been released with vision capabilities. For example in the last year or so we have seen the release of the Microsoft Xbox Kinect which relies on tracking human gestures for interaction or the Sony Cyber-shot T70 with smile detection.  Vision techniques are also becoming important in adding semantic meaning and searchability to the many millions of still images and minutes of video being uploaded to sites like \url{YouTube.com} and \url{Facebook.com}. 
 
-Computer Vision techniques have been successful when applied to specialised domains as listed above but identification and categorisation of the real-world is still in its infancy.
+Computer vision techniques have been successful when applied to specialised domains as listed above but identification and categorisation of the real-world is still in its infancy.
 
 \subsection{The Problem}
 One of the goals of this project is to utilise computer vision techniques to identify the particular type of trees from their leaves. There are many challenges associated with this type of problem, and as we have seen earlier in this chapter even existing applications such as Google Goggles have difficulty classifying real-world objects.
@@ -228,12 +236,12 @@ One of the goals of this project is to utilise computer vision techniques to ide
 Before we begin looking at the technical aspects of scanning and identifying features of leaves, we must take cognisance of the variance in shape and color that leaves of the same type may provide. These differences may be due to physical damage or natural variance of the leaf, or may be the result of lighting conditions, angle at which the image was exposed or even optical anomalies in the camera lens.
 
 \subsection{Libraries}
-Research on the topic begun by seeking out and talking to a number of students with previous experience in image processing. This provided an initial overview of the field and a number of libraries were suggested. After some independent study of available options only a small number of these libraries were deemed to be useful. Many Vision Libraries are orientated to solving medical, biological or engineering image processing problems, this project called for more general purpose functionality. Below a number of potentially suitable libraries are described.
+Research on the topic begun by seeking out and talking to a number of students with previous experience in image processing. This provided an initial overview of the field and a number of libraries were suggested. After some independent study of available options only a small number of these libraries were deemed to be useful. Many vision libraries are designed to solve medical, biological or engineering image processing problem. This project called for more general purpose functionality. Below a number of potentially suitable libraries are described.
 
 \colorbox{red}{Java, Android documentation and community}
 
 \subsubsection{VXL}
-VXL is a C++ library which implements a number of common vision algorithms. The library is divided into a number of core libraries, these include: 
+VXL is a C++ library which implements a number of common vision algorithms. The library is divided into a number of core libraries. These include: 
 
 \begin{itemize}
 \item vnl (numerics): Numerical containers and algorithms. e.g. matrices, vectors, decompositions, optimisers.
@@ -242,13 +250,13 @@ VXL is a C++ library which implements a number of common vision algorithms. The 
 \item vsl (streaming I/O), vbl (basic templates), vul (utilities): Miscellaneous platform-independent functionality.
 \end{itemize}
 
-Outside of the core libraries, it offers libraries for classification, feature tracking and video manipulation among many other features [REF http://vxl.sourceforge.net/]. But missing from this is support for machine learning, also Java Native Interfaces support is also not available and this is necessary for execution on Android.
+Outside of the core libraries, it offers libraries for classification, feature tracking and video manipulation among many other features [REF http://vxl.sourceforge.net/]. But missing from this is support for machine learning. Java Native Interfaces support is also not available and this is necessary for execution on Android.
 
 \url{http://vxl.sourceforge.net/}
 
 
 \subsubsection{LTI-Lib}
-LTI-Lib is a C++ based object orientated image processing and computer vision library. It has been used in research projects ranging from robotics to object and gesture recognition. It is developed to run on both Linux and Windows based architectures, to do it has encapsulated much of the OS specific functionality to make it portable. It provides functionality in four main areas Linear algebra, Classification and Clustering, Image Processing and Visualisation and Drawing tools.
+LTI-Lib is a C++ based object orientated image processing and computer vision library. It has been used in research projects ranging from robotics to object and gesture recognition. It is developed to run on both Linux and Windows-based architectures. To offer this cross-platform capability the library has encapsulated much of the OS specific functionality making it portable. It provides functionality in four main areas Linear algebra, Classification and Clustering, Image Processing and Visualisation and Drawing tools.
 
 At this time there appears to be no support for Java Native Interfaces (JNI) and is lacking machine learning functionality. This project is actively maintained and provides very good documentation.
  
@@ -258,7 +266,7 @@ At this time there appears to be no support for Java Native Interfaces (JNI) and
 \subsubsection{OpenCV}
 Initially created by Intel and currently maintained by the robotics company Willow Garage, OpenCV is designed for real-time computer vision and is heavily used in robotics. The library is well known for its inclusion in Stanley an autonomous off-road vehicle which was Stanford University's winning entrant in the two million dollar DARPA Grand Challenge \cite{openCV11}. 
 
-A C based library of over five hundred common image processing function which importantly includes statistical machine learning modules. In tests it has been proven considerably more performant than the other libraries investigated across a variety of tasks \cite{utkarsh10}. OpenCV provides C++ and Java based interfaces and the project recently added Android support. In addition to this there is an active community of users, good documentation and is widely used in academia for teaching computer vision.
+A C-based library of over five hundred common image processing function which importantly includes statistical machine learning modules. In tests it has been proven considerably more performant than the other libraries investigated across a variety of tasks \cite{utkarsh10}. OpenCV provides C++ and Java based interfaces and the project recently added Android support. In addition to this there is an active community of users, good documentation and is widely used in academia for teaching computer vision.
 
 \url{http://opencv.willowgarage.com}
 
@@ -266,7 +274,7 @@ After all the libraries were considered, OpenCV was selected due to its performa
 
 \subsection{Identification Approaches}
 
-There appear to be two distinct approaches available in developing a vision mechanism to identify leaf types. The first being a largely manual approach were edge detection is performed on the image, and with this enhanced image information about the shape of the leaf is extracted and compared against a database of leaf shapes. Secondly the machine learning approach involves providing large numbers of images with some containing the leaf type in question and others without any leaves, with sufficient training a model should be developed to successfully identify the leaf type.
+There appear to be two distinct approaches available in developing a vision mechanism to identify leaf types. The first is a largely manual approach were edge detection is performed on the image, and with this enhanced image information about the shape of the leaf is extracted and compared against a database of leaf shapes. Secondly the machine learning approach involves providing large numbers of images with some containing the leaf type in question and others without any leaves, with sufficient training a model should be developed to successfully identify the leaf type.
 
 At this stage it is not clear which approach will prove to be the most successful, both in terms of accuracy and performance on a resource restricted environment. This will be explored further in the Leaf Identification chapter.
 
