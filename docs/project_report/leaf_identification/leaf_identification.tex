@@ -77,6 +77,8 @@ After experimenting with a number of different techniques for creating a good qu
 
 As seen in Figure \colorbox{red}{binary image}, we should now be provided with a clean binary image. We must now use some mechanism to capture the detected shapes and compare them to a store of pre-captured shapes in an efficient manner. 
 
+\colorbox{red}{why is threshold better than canny edge detection}
+
 \subsubsection{Contours}
 OpenCV provides the useful function \emph{cvFindContours()} which maps boundaries in a binary image. A contour is essentially a list of points that represent a curve in an image \cite{bradski08}. We must be aware that the contours returned are those discovered in the image and due to lighting and other conditions may not represent the actual object.
 
@@ -93,8 +95,8 @@ From exposing many different silhouettes of leaves a value of less than 0.2 can 
 
 An image moment defines a gross characteristic of a contour which is calculated from the integral of all the pixels in the contour. These moment’s can be used to compare two contours, but will not match contours of the same shape but of different sizes or rotation. Hu invariant moments provide the ability to match shapes regardless of their size, rotation or reflection.
 
-\subsubsection{Other techniques}
-\colorbox{red}{Freeman Chain Codes} histogram - minor rotation invarience
+\colorbox{red}{detail about how they are matched}
+
 
 \subsection{Storage and Retrieval}
 To describe a leaf before applying polygon approximations we see in the region of 700 Cartesian points, \colorbox{red}{how may after??}. Efficient lookup and storage of these leaf signatures is going to prove to be a difficult task.
@@ -102,4 +104,29 @@ To describe a leaf before applying polygon approximations we see in the region o
 For this project the approach used was to load a flat file of contours into memory, storing this form of data in a relational structure would be massively inefficient.
 
 It is clear that as the size of the library increases a lookup mechanism would be required, removing the need to store all contours in memory.
+
+\subsubsection{Other techniques}
+\colorbox{red}{Freeman Chain Codes} histogram - minor rotation invarience
+\colorbox{red}{adaptive algo to lighting, edge detection, other techniques}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Machine Learning Approach}
+haarcascade classifier
+
+\colorbox{red}{How to partiton the set in multiple ways - as paddys suggestion}
+
+\subsection{Training Set}
+
+\subsubsection{Positive Images}
+between 2500 - 5000 images recommended
+different lighting, angles etc
+
+\subsubsection{Negative Images}
+3000 negative image - do not contain object in question
+
+\subsubsection{Natural Test Images}
+
+\subsubsection{Preparing the dataset}
+Use http://code.google.com/p/imageclipper/ 
+All images must have the same size
