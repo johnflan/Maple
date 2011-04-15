@@ -1,7 +1,6 @@
 package com.johnflan.javacv.detectcontours;
 
 
-import java.awt.Toolkit;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -30,7 +29,7 @@ public class DetectContours {
         
         IplImage frameRaw = grabber.grab();
         //!!IplImage frameRaw = cvLoadImage(
-        //!!        "/home/johnflan/workspace/Maple/docs/misc_images/testLeaf.png",
+        //!!        "/home/johnflan/workspace/Maple/docs/misc_images/testimg/leaf.png",
         //!!        CV_LOAD_IMAGE_UNCHANGED);
         
         
@@ -41,6 +40,12 @@ public class DetectContours {
         
         CanvasFrame canvasFramePost = new CanvasFrame("Postprocessing");
         canvasFramePost.setCanvasSize(frameRaw.width(), frameRaw.height());
+        
+        CanvasFrame canvasFramePre1 = new CanvasFrame("Preprocessing");
+        canvasFramePre1.setCanvasSize(frameRaw.width(), frameRaw.height());
+        
+        CanvasFrame canvasFramePost1 = new CanvasFrame("Postprocessing");
+        canvasFramePost1.setCanvasSize(frameRaw.width(), frameRaw.height());
         
     	
     	FramePreProcessor framePreProcessor = new FramePreProcessor();
@@ -56,6 +61,34 @@ public class DetectContours {
     	//CvSeq sampleLeaf = contourProcessor.loadTestLeafContour();
     	Map<String, CvSeq> leafSet = contourProcessor.loadTestLeaves();
     	
+    	
+    	
+    	
+    	CvSeq tempContour = leafSet.get("Maple");
+    	contourProcessor.printContourPoints(tempContour);
+    	IplImage mapleContour = cvLoadImage(
+    	                "/home/johnflan/workspace/Maple/docs/misc_images/testimg/leaf.png",
+    	                CV_LOAD_IMAGE_UNCHANGED);
+    	cvDrawContours(mapleContour, tempContour, CV_RGB( 0,  255,  0 ), CV_RGB( 0,  255,  0 ), -1, 2,8, cvPoint(0,0));
+    	
+    	
+    	canvasFramePre1.setTitle("Maple contour raw");
+    	canvasFramePre1.showImage(mapleContour);
+
+		
+
+    	
+    	System.out.println("Low");
+    	CvSeq tempContourLow = cvApproxPoly(tempContour, Loader.sizeof(CvContour.class), storage,CV_POLY_APPROX_DP,1,1);
+    	contourProcessor.printContourPoints(tempContourLow);
+    	IplImage mapleContourPolyApprox = cvLoadImage(
+                "/home/johnflan/workspace/Maple/docs/misc_images/testimg/leaf.png",
+                CV_LOAD_IMAGE_UNCHANGED);
+    	cvDrawContours(mapleContourPolyApprox, tempContourLow, CV_RGB( 0,  255,  0 ), CV_RGB( 0,  255,  0 ), -1, 2,8, cvPoint(0,0));
+    	
+		canvasFramePost1.setTitle("Maple contour poly approx");
+    	canvasFramePost1.showImage(mapleContourPolyApprox);
+    	
     	Iterator leafItr = leafSet.entrySet().iterator();
 		
 		while (leafItr.hasNext()){
@@ -69,10 +102,19 @@ public class DetectContours {
 
         	//convert to grayscale and equalise levels
         	framePreProcessor.prepareImage(frameRaw, frameProcessed);	
-        	framePreProcessor.dilate(frameProcessed);
+        	
+        	canvasFramePre1.setTitle("After Equalisation");
+        	canvasFramePre1.showImage(frameProcessed);
+        	
     		framePreProcessor.applyThreshold(frameProcessed, frameProcessed);
     		cvNot(frameProcessed, frameProcessed); //invert the image
+    		
+    		canvasFramePost1.setTitle("After threshold");
+        	canvasFramePost1.showImage(frameProcessed);
 
+    		framePreProcessor.dilate(frameProcessed);
+    		
+    		canvasFramePost.setTitle("Final image");
     		canvasFramePost.showImage(frameProcessed);
         	//Detect and Draw contours
         	cvFindContours(cvCloneImage(frameProcessed), storage, contourPtr, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cvPoint(0, 0));

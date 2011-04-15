@@ -47,7 +47,7 @@ public class FramePreProcessor {
 
 	public void dilate(IplImage frameProcessed) {
 		
-		cvDilate(frameProcessed, frameProcessed, null, 3);
+		cvDilate(frameProcessed, frameProcessed, null, 2);
 		
 	}
 

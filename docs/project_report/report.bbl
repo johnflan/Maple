@@ -30,6 +30,13 @@ eLinux.org Embedded Linux~Wiki.
 \newblock Android kernel features.
 \newblock \url{http://elinux.org/Android_Kernel_Features}.
 
+\bibitem{rizon06}
+Mohamed~Rizon et~al.
+\newblock Object detection using geometric invariant momen.
+\newblock
+  \url{http://dspace.unimap.edu.my/dspace/bitstream/123456789/11347/1/ajas3618%
+76-1878.pdf}, 2006.
+
 \bibitem{openCV11}
 Willow Garage.
 \newblock Opencv.
@@ -40,10 +47,23 @@ Drew Morgan~(Vision Group).
 \newblock The iplimage structure.
 \newblock \url{http://www.comp.leeds.ac.uk/vision/opencv/iplimage.html}, 2006.
 
+\bibitem{park05}
+Andy C.~Yu Heechan~Park, Graham R.~Martin.
+\newblock Lossless contour representation using efficient multiple grid chain
+  coding.
+\newblock
+  \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.60.8230&rep=re%
+p1&type=pdf}, 2005.
+
+\bibitem{iivarinen97}
+Jukka Iivarinen.
+\newblock Shape coding techniques.
+\newblock \url{http://www.bmva.org/bmvc/1997/papers/062/node2.html}, 1997.
+
 \bibitem{kuntz09}
 Noah Kuntz.
 \newblock Opencv tutorial.
-\newblock \url{http://dasl.mem.drexel.edu/~noahKuntz/openCVTut5.html}, 209.
+\newblock \url{http://dasl.mem.drexel.edu/~noahKuntz/openCVTut5.html}, 2009.
 
 \bibitem{feili10}
 Prof. Fei-Fei Li.
@@ -71,6 +91,12 @@ David Petrou.
   \url{http://www.hotchips.org/uploads/archive22/Publish_Search_by_sight_Googl%
 e_Goggles.pdf}, August 2010.
 
+\bibitem{ramer72}
+Urs Ramer.
+\newblock An iterative procedure for the polygonal approximation of plane
+  curves.
+\newblock \url{http://dx.doi.org/10.1016/S0146-664X(72)80017-0}, 1972.
+
 \bibitem{wilson99}
 Frank C.~Keil Robert Andrew~Wilson.
 \newblock {\em The MIT encyclopedia of the cognitive sciences}.
@@ -80,6 +106,13 @@ Frank C.~Keil Robert Andrew~Wilson.
 Rick Rogers, John Mombardo, Zigurd Mednieks, and Blake Meike.
 \newblock {\em Android application development}.
 \newblock O'Reilly, 2009.
+
+\bibitem{shutler02}
+Jamie Shutler.
+\newblock Hu invariant set.
+\newblock
+  \url{http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/SHUTLER3/node8.%
+html}, 2002.
 
 \bibitem{utkarsh10}
 Utkarsh Sinha.
