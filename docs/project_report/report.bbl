@@ -1,9 +1,49 @@
 \begin{thebibliography}{10}
 
-\bibitem{bradski08}
-Gary Bradski and Adrian Kaehler.
-\newblock {\em Learning OpenCV}.
-\newblock O'Reilly, 2008.
+\bibitem{canalys11}
+Canalys.
+\newblock Google’s android becomes the world’s leading smart phone
+  platform.
+\newblock \url{http://www.canalys.com/pr/2011/r2011013.html}, January 2011.
+
+\bibitem{vbgoggles10}
+Dean Takahashi.
+\newblock How google goggles works to deliver visual search results for mobile
+  phones.
+\newblock
+  \url{http://venturebeat.com/2010/08/23/how-google-goggles-works-to-deliver-v%
+isual-search-results-for-mobile-phones/}, August 2010.
+
+\bibitem{sbs10}
+David Petrou.
+\newblock Search by sight: Google goggles.
+\newblock
+  \url{http://www.hotchips.org/uploads/archive22/Publish_Search_by_sight_Googl%
+e_Goggles.pdf}, August 2010.
+
+\bibitem{wang03}
+Avery Li-Chun Wang.
+\newblock An industrial-strength audio search algorithm.
+\newblock \url{http://www.ee.columbia.edu/~dpwe/papers/Wang03-shazam.pdf},
+  2003.
+
+\bibitem{zxingproject}
+ZXing.
+\newblock Multi-format 1d/2d barcode image processing library with clients for
+  android, java.
+\newblock \url{http://code.google.com/p/zxing/}.
+
+\bibitem{elinuxandroidkernel}
+eLinux.org Embedded Linux~Wiki.
+\newblock Android kernel features.
+\newblock \url{http://elinux.org/Android_Kernel_Features}.
+
+\bibitem{registerAndroidKernel10}
+Cade Metz.
+\newblock Google's android code deleted from linux kernel.
+\newblock
+  \url{http://www.theregister.co.uk/2010/02/03/android_driver_code_deleted_fro%
+m_linux_kernel}, February 2010.
 
 \bibitem{googioanatomy08}
 Patrick Brady.
@@ -12,18 +52,6 @@ Patrick Brady.
   \url{http://sites.google.com/site/io/anatomy--physiology-of-an-android}, June
   2008.
 
-\bibitem{canalys11}
-Canalys.
-\newblock Google’s android becomes the world’s leading smart phone
-  platform.
-\newblock \url{http://www.canalys.com/pr/2011/r2011013.html}, January 2011.
-
-\bibitem{anderson06}
-Lionel (Lon)~Shapiro David L.~Anderson.
-\newblock Chain codes: An introduction.
-\newblock
-  \url{http://www.mind.ilstu.edu/curriculum/modOverview.php?modGUI=162}, 2006.
-
 \bibitem{ehringerdalvik10}
 David Ehringer.
 \newblock The dalvik virtual machine.
@@ -31,10 +59,67 @@ David Ehringer.
   \url{http://davidehringer.com/software/android/The_Dalvik_Virtual_Machine.pd%
 f}, March 2010.
 
-\bibitem{elinuxandroidkernel}
-eLinux.org Embedded Linux~Wiki.
-\newblock Android kernel features.
-\newblock \url{http://elinux.org/Android_Kernel_Features}.
+\bibitem{googioappframework08}
+Dan Morrill.
+\newblock Inside the android application framework.
+\newblock
+  \url{http://sites.google.com/site/io/inside-the-android-application-framewor%
+k}, June 2008.
+
+\bibitem{rogers09}
+Rick Rogers, John Mombardo, Zigurd Mednieks, and Blake Meike.
+\newblock {\em Android application development}.
+\newblock O'Reilly, 2009.
+
+\bibitem{feili10}
+Prof. Fei-Fei Li.
+\newblock Cs 223b: Introduction to computer vision.
+\newblock \url{http://vision.stanford.edu/teaching/cs223b}, 2010.
+
+\bibitem{wilson99}
+Frank C.~Keil Robert Andrew~Wilson.
+\newblock {\em The MIT encyclopedia of the cognitive sciences}.
+\newblock MIT Press, 1999.
+
+\bibitem{openCV11}
+Willow Garage.
+\newblock Opencv.
+\newblock \url{http://www.willowgarage.com/pages/software/opencv}, 2011.
+
+\bibitem{utkarsh10}
+Utkarsh Sinha.
+\newblock Opencv vs vxl vs lti: Performance test.
+\newblock
+  \url{http://www.aishack.in/2010/07/opencv-vs-vxl-vs-lti-performance-test},
+  2010.
+
+\bibitem{morganIPL06}
+Drew Morgan~(Vision Group).
+\newblock The iplimage structure.
+\newblock \url{http://www.comp.leeds.ac.uk/vision/opencv/iplimage.html}, 2006.
+
+\bibitem{kuntz09}
+Noah Kuntz.
+\newblock Opencv tutorial.
+\newblock \url{http://dasl.mem.drexel.edu/~noahKuntz/openCVTut5.html}, 2009.
+
+\bibitem{bradski08}
+Gary Bradski and Adrian Kaehler.
+\newblock {\em Learning OpenCV}.
+\newblock O'Reilly, 2008.
+
+\bibitem{ramer72}
+Urs Ramer.
+\newblock An iterative procedure for the polygonal approximation of plane
+  curves.
+\newblock \url{http://dx.doi.org/10.1016/S0146-664X(72)80017-0}, 1972.
+
+\bibitem{shutler02}
+Jamie Shutler.
+\newblock Hu invariant set.
+\newblock
+  \url{http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/SHUTLER3/node8.%
+html}, 2002.
 
 \bibitem{rizon06}
 Mohamed~Rizon et~al.
@@ -42,16 +127,6 @@ Mohamed~Rizon et~al.
 \newblock
   \url{http://dspace.unimap.edu.my/dspace/bitstream/123456789/11347/1/ajas3618%
 76-1878.pdf}, 2006.
-
-\bibitem{openCV11}
-Willow Garage.
-\newblock Opencv.
-\newblock \url{http://www.willowgarage.com/pages/software/opencv}, 2011.
-
-\bibitem{morganIPL06}
-Drew Morgan~(Vision Group).
-\newblock The iplimage structure.
-\newblock \url{http://www.comp.leeds.ac.uk/vision/opencv/iplimage.html}, 2006.
 
 \bibitem{park05}
 Andy C.~Yu Heechan~Park, Graham R.~Martin.
@@ -66,85 +141,48 @@ Jukka Iivarinen.
 \newblock Shape coding techniques.
 \newblock \url{http://www.bmva.org/bmvc/1997/papers/062/node2.html}, 1997.
 
-\bibitem{kuntz09}
-Noah Kuntz.
-\newblock Opencv tutorial.
-\newblock \url{http://dasl.mem.drexel.edu/~noahKuntz/openCVTut5.html}, 2009.
-
-\bibitem{feili10}
-Prof. Fei-Fei Li.
-\newblock Cs 223b: Introduction to computer vision.
-\newblock \url{http://vision.stanford.edu/teaching/cs223b}, 2010.
-
-\bibitem{registerAndroidKernel10}
-Cade Metz.
-\newblock Google's android code deleted from linux kernel.
+\bibitem{anderson06}
+Lionel (Lon)~Shapiro David L.~Anderson.
+\newblock Chain codes: An introduction.
 \newblock
-  \url{http://www.theregister.co.uk/2010/02/03/android_driver_code_deleted_fro%
-m_linux_kernel}, February 2010.
+  \url{http://www.mind.ilstu.edu/curriculum/modOverview.php?modGUI=162}, 2006.
 
-\bibitem{googioappframework08}
-Dan Morrill.
-\newblock Inside the android application framework.
+\bibitem{agarwal03}
+Pankaj~K. Agarwal.
+\newblock Clustering & classification.
 \newblock
-  \url{http://sites.google.com/site/io/inside-the-android-application-framewor%
-k}, June 2008.
+  \url{http://www.cs.duke.edu/courses/fall03/cps260/notes/lecture18.pdf}, 2003.
 
-\bibitem{sbs10}
-David Petrou.
-\newblock Search by sight: Google goggles.
+\bibitem{seo08}
+Naotoshi Seo.
+\newblock Opencv haar training.
+\newblock \url{http://note.sonots.com/SciSoftware/haartraining.html}, 2008.
+
+\bibitem{sun08}
+Min Sun.
+\newblock Opencv and face detection.
 \newblock
-  \url{http://www.hotchips.org/uploads/archive22/Publish_Search_by_sight_Googl%
-e_Goggles.pdf}, August 2010.
+  \url{http://www.cs.princeton.edu/courses/archive/fall08/cos429/CourseMateria%
+ls/Precept1/facedetect.pdf}, 2008.
 
-\bibitem{ramer72}
-Urs Ramer.
-\newblock An iterative procedure for the polygonal approximation of plane
-  curves.
-\newblock \url{http://dx.doi.org/10.1016/S0146-664X(72)80017-0}, 1972.
-
-\bibitem{wilson99}
-Frank C.~Keil Robert Andrew~Wilson.
-\newblock {\em The MIT encyclopedia of the cognitive sciences}.
-\newblock MIT Press, 1999.
-
-\bibitem{rogers09}
-Rick Rogers, John Mombardo, Zigurd Mednieks, and Blake Meike.
-\newblock {\em Android application development}.
-\newblock O'Reilly, 2009.
-
-\bibitem{shutler02}
-Jamie Shutler.
-\newblock Hu invariant set.
+\bibitem{adolf03}
+Florian Adolf.
+\newblock Opencv's rapid object detection.
 \newblock
-  \url{http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/SHUTLER3/node8.%
-html}, 2002.
+  \url{http://lab.cntl.kyutech.ac.jp/~kobalab/nishida/opencv/OpenCV_ObjectDete%
+ction_HowTo.pdf}, 2003.
 
-\bibitem{utkarsh10}
-Utkarsh Sinha.
-\newblock Opencv vs vxl vs lti: Performance test.
-\newblock
-  \url{http://www.aishack.in/2010/07/opencv-vs-vxl-vs-lti-performance-test},
-  2010.
+\bibitem{sun11}
+Java native access (jna).
+\newblock \url{http://jna.java.net/#performance}, 2011.
 
-\bibitem{vbgoggles10}
-Dean Takahashi.
-\newblock How google goggles works to deliver visual search results for mobile
-  phones.
-\newblock
-  \url{http://venturebeat.com/2010/08/23/how-google-goggles-works-to-deliver-v%
-isual-search-results-for-mobile-phones/}, August 2010.
+\bibitem{ndk11}
+Ndk overview.
+\newblock \url{http://developer.android.com/sdk/ndk/overview.html}, 2011.
 
-\bibitem{wang03}
-Avery Li-Chun Wang.
-\newblock An industrial-strength audio search algorithm.
-\newblock \url{http://www.ee.columbia.edu/~dpwe/papers/Wang03-shazam.pdf},
-  2003.
-
-\bibitem{zxingproject}
-ZXing.
-\newblock Multi-format 1d/2d barcode image processing library with clients for
-  android, java.
-\newblock \url{http://code.google.com/p/zxing/}.
+\bibitem{benfield10}
+Ewan Benfield.
+\newblock Native development kit (ndk): Reading a file using a native method.
+\newblock \url{http://www.telesense.co.uk/?page_id=106}, 2010.
 
 \end{thebibliography}

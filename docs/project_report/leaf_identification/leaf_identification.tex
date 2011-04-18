@@ -151,9 +151,9 @@ Hu invariant moments provide the ability to match shapes under translation, so c
 \colorbox{red}{would be nice to expand on hu moments}
 
 \subsubsection{Additional techniques}
-Using Hu invariant moments to compare two shapes has proven to be quite accurate, but it is not the only approach we could have taken. A number of other options such as Freemans chain codes and calculating convexity defects from a convex hull offer interesting alternatives \cite{park05, iivarinen97}. 
+Using Hu invariant moments to compare two shapes has proven to be quite accurate, but it is not the only approach that could have taken. A number of other options such as Freemans chain codes and calculating convexity defects from a convex hull offer interesting alternatives \cite{park05, iivarinen97}. 
 
-As we can see in Figure \ref{chain_codes} that chain codes are conceptually simpler than Hu invariant moments. In part \emph{a} of the figure we can see a diagram with 8 marked arrows, which can be relative or absolute directions and each direction having a unique symbol. These symbols are used to record a change in direction in a shapes contour. We see in part \emph{b} a shape with a start point which is processed to create a representation for that shape using the directionality symbols seen in part \emph{c}. Finally in part \emph{d} we see a histogram for this recorded chain code. This histogram is used to identify that contour under a rotational transform. To compare the contour under transform we simply move the starting point in the histogram on one position wrapping the previous data point to the end of the histogram \cite{anderson06}.
+As we can see in Figure \ref{chain_codes} that chain codes are conceptually simpler than Hu invariant moments. In part \emph{a} of the figure we can see a diagram with 8 marked arrows having either relative or absolute directions and each direction having a unique symbol. These symbols are used to record a change in direction in a shapes contour. We see in part \emph{b} a shape with a start point which is processed to create a representation for that shape seen in part \emph{c}. Finally in part \emph{d} we see a histogram for this recorded chain code. This histogram is used to identify that contour under a rotational transform. To compare the contour under transform we simply move the starting point in the histogram on one position wrapping the previous data point to the end of the histogram \cite{anderson06}.
 
 \begin{figure}[h!]
 \centering
@@ -162,36 +162,98 @@ As we can see in Figure \ref{chain_codes} that chain codes are conceptually simp
     \label{chain_codes}
 \end{figure}
 
-Finally another way of identifying a shape involves calculating convexity defects from a convex hull, this is also a successful mechanism for identifying particular kinds of shapes. Generating a convex hull involves creating a shape with the least amount of vertices to contain the detected shape, in effect connecting the most protruding points in the shape. With this convex hull we then calculate the distance from the convex hull to the actual shape. Using this technique could potentially be useful to in creating a lookup mechanism.
+Finally another way of identifying a shape involves calculating convexity defects from a convex hull, this is also a successful mechanism for identifying particular kinds of shapes. Generating a convex hull involves creating a shape with the least amount of vertices to contain the detected shape, in effect connecting the most protruding points in the shape. With this convex hull we then calculate the distance from the convex hull to the actual shape, which we call the convexity defects. Using this technique could potentially be useful to in creating a lookup mechanism.
 
 \subsection{Storage and Retrieval}
 As we have seen earlier we are able reduce our representation of a leaf shape from 699 to 126 points. This reduction in the number of points is important, but we still require a certain number of points to have sufficient definition in the reference leaf contour. Due to the variance in complexity of leaf shape, these reference leaf signatures will be of a variable length.
 
-For our example leaf we will require in the region of 1008 bytes of memory to store this reference contour. This memory breaks down as follows. There are 126 points which are stored as a linked list. Each point is stored in a data type called \emph{CvPoint} which contains two integers, and it can be assumed that each integer requires 4 bytes of memory. In addition to this we also need to store a string for the name of the leaf as well as potentially storing a URL to provide additional information about the tree.
+For our example leaf we will require in the region of 1008 bytes of memory to store this reference contour. This memory breaks down as follows. There are 126 points which are accessed through a linked list. Each point is stored in a data type called \emph{CvPoint} which contains two integers, and it can be assumed that each integer requires 4 bytes of memory. In addition to this we also need to store a string for the name of the leaf as well as potentially storing a URL to provide additional information about the tree.
 
-Efficient lookup and storage of these leaf signatures is difficult. For this project the lookup was essentially a linear operation with each reference contour being compared to every contour of a particular complexity and size discovered in the image. Storage of the reference contours was preformed using a flat file containing each point. Storing this form of data in a relational structure would be massively inefficient.
+Efficient lookup and storage of these leaf signatures is difficult. For this project the lookup was essentially a brute-force operation with each reference contour being compared to every contour of a particular complexity and size discovered in the image. Storage of the reference contours was preformed using a flat file containing each point. Storing this form of data in a relational structure would be massively inefficient.
 
 It is clear that as the size of the reference library increases a lookup mechanism would be required, as it may be impossible to store all the reference contours in memory. It may be necessary to take some other properties of the contour into account for creating this lookup mechanism, these could include a contour complexity or length metric. 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \section{Machine Learning Approach}
-haarcascade classifier
 
-\colorbox{red}{How to partiton the set in multiple ways - as paddys suggestion}
+The use of machine learning is a common solution to the computer vision problem. Machine learning enables software make a decision based on a collection of preprocessed data. This is done by creating a model from training data which we can compare against various inputs.
+
+There are two major approaches we can take in order to identify an object.
+
+\begin{description}
+\item[Clustering] Uses unsupervised learning to group inputs based on features that are similar in some way. This can be useful for identifying previously unobserved clusters \cite{agarwal03}. 
+\item[Classifier] A supervised learning technique for discovering which which of a predefined set of classes a new object belongs to.
+\end{description}
+
+To meet the goals of this project it would appear that a classifier would be the most suitable approach. Again OpenCV offers a number of supervised learning algorithms, each with their own strengths and weaknesses. The Haar classifier implementation that OpenCV provides offers good detection capabilities for rigid objects and characteristic views \cite{bradski08}.
+
+This approach of building the classifier model on a server and deploying it to the handset satisfies the requirements of the project by enabling the leaf identification to be performed on the mobile device without network connectivity. 
+
+However, using this approach removes the ability for the user to add newly discovered leaves to its database. This could be tackled by asking the user in the case of an unidentified leaf to annotate the leaf with its type (if known) and upload the labeled image to a server for later addition to the model.
+
 
 \subsection{Training Set}
 
-\subsubsection{Positive Images}
-between 2500 - 5000 images recommended
-different lighting, angles etc
+Initially generating training data for a classifier is a difficult and slow undertaking. To generate a reasonable classifier we need to provide between 5000 and 10,000 annotated images, less training data can be provided but the results will be less accurate \cite{bradski08, seo08}.
 
-\subsubsection{Negative Images}
-3000 negative image - do not contain object in question
+\begin{description}
+\item[Positive images] This will consist of 90\% of the training data, images should contain different lighting, angles and backgrounds. Each image must be labeled and cropped to a predetermined size.
+\item[Negative images] This set of images must not contain the object in question, 3000 or more images will be required.
+\item[Test images] These will be the other 10\% of the annotated training data, these images will only be used to verify the accuracy of the classifier.
+\end{description}
 
-\subsubsection{Natural Test Images}
+Obtaining these large quantities of images for varying leaf types is a difficult task. One interesting solution encountered is to record video of an object while moving the camera across different angles and changing the light source. We are then able to extract single frames from the video and use these images as input.
 
-\subsubsection{Preparing the dataset}
-Use http://code.google.com/p/imageclipper/ 
-All images must have the same size
+\subsection{Training Process}
+A number of utilities are provided for training a Haar classifier, the key utilities are be outlined below. It may prove useful to automate this process as the training process may require several days to complete.
+
+\subsubsection{Create Samples}
+From our training set we must create training samples using the \emph{createsamples} utility which offers the following functionality \cite{sun08}.
+
+\begin{itemize}
+\item Create samples from one input image applying various distortions.
+\item  Create samples from the library of training data without applying any transforms.
+\item Create samples from ground truth from a single image with transformations.
+\item Display the samples stored in the .vec training file format.
+\end{itemize}
+
+These samples must be of a uniform size, with 20x20 appearing to be quite commonly used. For each of the positive training sets we must generate a text file with one line per image detailing \langle filename\rangle \langle number\_of\_rectangles\rangle \langle x\_y\_coord\_of\_each\_rect\rangle$  
+which we will use as input to the \emph{createsamples} utility \cite{adolf03}.
+
+These sample images must then be packed into the \emph{.vec} training file, using the  \emph{createsamples} utility. In Figure \ref{creating_samples} the command to build the \emph{.vec} can be seen.
+
+\begin{figure}[h!]
+\begin{lstlisting}
+opencv-createsamples -info positives/train.txt -vec data/positives.vec -num 1300 -w 20 –h 20 
+\end{lstlisting}
+\caption{Packing a .vec file with training samples}
+\label{creating_samples}
+\end{figure}
+
+\subsubsection{Training}
+The actual training of the model is performed by the utility \emph{haartraining}, which employs the Viola-Jones algorithm to create a cascade file. In Figure \ref{creating_detector} we see the sample parameters provided to the utility to begin training the model. Default values for hitrate, maxfalsealarm, weighttrimming and boosting type can be used in most cases leaving only a small number of parameters needing to be changed \cite{adolf03}.
+
+\begin{figure}[h!]
+\begin{lstlisting}
+opencv-haartraining -data data/cascade -vec data/positives.vec -bg negatives/train.txt  -npos 1300 -nneg 5350 -nstages 30 -mem 1300 -mode ALL -w 20 -h 20 
+\end{lstlisting}
+\caption{Creating a detector}
+\label{creating_detector}
+\end{figure}
+
+\subsubsection{Testing}
+Once the training is complete, we may use the \emph{performance} utility to test the resulting cascade. In order to use the test images we mentioned earlier, we must generate a text file containing only the test image file names, one per line. Additionally we may specify \emph{-ni} flag in the \emph{performance} utility which will save a copy of each test image with a detected object having bounding box drawn around the object. In Figure \ref{testing_cascade} the parameters required to test the cascade are outlined.
+
+\begin{figure}[h!]
+\begin{lstlisting}
+opencv-performance -data data/cascade -info positives/testing/testing.txt -w 20 -h 20 -rs 30
+\end{lstlisting}
+\caption{Testing the cascade}
+\label{testing_cascade}
+\end{figure}
+
+\subsection{Outcome}
+The use of machine learning in this type application offers a number of clear advantages such as enabling the classification to be performed locally on the handset, only requiring minimal local processing and better classification under varying conditions. But to get a working model running initially requires a large time investment.
+
+Although it would have been interesting to develop this classifier, it was decided not to proceed. This decision was taken primarily due to the time required to generate a robust model for more than one type of leaf, the success of the algorithmic approach and also that is was not necessary to prove the concept of real time leaf detection on a mobile handset. For future work in this area a Haar classifier would be a definite avenue of approach.
+
