@@ -4,8 +4,30 @@
 
 \subsection{Conclusion}
 
-Excellent Learning experience (vision and android)
-Time management
 
+
+
+This project has proven to be an invaluable learning experience, in terms of technical knowledge acquired, how to approach a large and complex project and in time management. It was also encouraging to apply many of the skills learned over the course of the 4 years in a single project.
+
+Technically the project covered much ground, particularly in areas unfamiliar to the author. It was most interesting and enjoyable to combine computer vision with mobile application development, especially as it utilises new and interesting applications of these technologies. It has definitely sparked an interest to dig deeper.
+
+
+\subsubsection{Original Objectives}
+The design and implementation of a mobile application to identify tree types from images of their leaves was no trivial task. The two major components of the project leaf recognition and getting OpenCV performing some contour detection on an Android device were major goals that were successfully achieved. While the the goal of combining all the functionality in a single mobile application was not fully realised, the gap between the current functionality and the original goals is not that great. 
+
+A number of technical issues blocked or slowed progress, particularly when porting the vision component to the Android native environment. Also beginning with no more than a cursory understanding of the concepts of computer vision, reading and learning about this field consumed copious amounts of time.
 
 \subsection{Further work}
+
+There are a number of areas of further work identified during the duration of this project. It would have been nice to integrate some or all of these components into the submitted project, but unfortunately due to time constraints this was not possible.
+
+\begin{description}
+\item[Dynamic Preprocessing] With lighting conditions constantly changing it would be interesting to take the previous frame into account for processing the next frame before conversion to a binary image. Also it might be interesting to change the type of processing performed on the image to suit the lighting conditions.
+\item[Geographic integration] Beyond the scope of the original specification, the use of geographic information to partition the set of leaves for that location would offer an interesting alternative for minimising lookup time.
+\item[Lookup mechanism for leaf signatures] As the applications library of leaves grow, some lookup mechanism will be required to find leaves in the library efficiently. A number of areas could be investigated such as the use of a classifier to group leaves by some property or some sort of decision tree mechanism.
+\item[Further NDK development] The creation of a mechanism for identifying leaves outside of the image processing routine, much like that of the image pool would be an interesting venture in Android development and key in the use of the NDK for a deployable application.
+\item[Machine learning classifier] Deeper investigation in the use of the machine thought classifier in a mobile application and the generation of a series of models for a number of leaves is of definite interest. It would also be useful to test a deployment mechanism to enable the mobile application to check a remote service to ensure it has the latest models.
+\end{description}
+
+
+
