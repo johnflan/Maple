@@ -138,7 +138,7 @@ Android applications are packed into an APK file, which is essentially a collect
 
 \colorbox{red}{List key files in APK package}
 
-Android applications are a collection of Activities, Tasks and Processes this structure is illustrated in Figure \ref{activity_activities_tasks_processes}. An activity is regarded as a single concrete element of functionality which may not have any UI, whereas a task is a collection of activities potentially across a number of applications which are used to complete some unit of work. This offers the developer the ability to create new applications that can to knit together existing components to maximise reuse and minimise development time.
+Android applications are a collection of Activities, Tasks and Processes this structure is illustrated in Figure \ref{activity_activities_tasks_processes}. An activity is regarded as a single concrete element of functionality which may not have any UI, whereas a task is a collection of activities potentially across a number of applications which are used to complete some unit of work. This offers the developer the ability to create new applications that can knit together existing components to maximise reuse and minimise development time.
 
 \begin{figure}[h!]
 \centering
@@ -176,9 +176,9 @@ An Activity may interact with the user through a View or may interact with the s
 
 \subsubsection{Intents}
 
-With this component-based framework and in the extreme example of a Task made up of a number of Activities from different applications, a communication mechanism was required to bind all these Activities and Services together.
+With a component-based framework such as this, where a Task made up of a number of Activities from different applications, a communication mechanism is required to bind these Activities and Services together.
 
-The Android solution to this was the concept of an Intent, which eliminated the need to duplicate functionality in different applications, allowed functionality to be discovered and invoked on the fly, and gave users the ability to replace units of functionality as they wish \cite{rogers09}. To quote the Android documentation, an Intent is a simple message object that represents an 'intention' to do something. These Intents can be divided into two categories:
+Android solved this problem with a mechanism called an Intent. An Intent is a programmatic mechanism for an application developer to request a activity which may or may not be available on the device. This eliminated the need to duplicate functionality in different applications by allowing functionality to be discovered and invoked on the fly, and gave users the ability to replace units of functionality as they wish \cite{rogers09}. To quote the Android documentation, an Intent is a simple message object that represents an 'intention' to do something. These Intents can be divided into two categories:
 
 \begin{itemize}
 \item Explicit Intents\\
@@ -201,7 +201,7 @@ startActivity(i);
 \end{figure}
 
 \subsection{Native Development Kit}
-The Android Application Framework as we have seen previously executes managed code in its own instance of a Dalvik virtual machine. This offers a number of advantages with the most prominent being architecture independence and the ability to manage memory, which is critical on a device with such limited resources. However, the downside to executing in a virutalised environment is a decreased level of performance due to the extra steps involved in converting the bytecode to native machine instructions. This performance penalty can be problematic for applications that are CPU bound. Such forms of processing would include processing data from input devices such as microphones or cameras.
+The Android Application Framework as we have seen previously executes managed code in its own instance of a Dalvik virtual machine. This offers a number of advantages with the most prominent being architecture independence and the ability to manage memory, which is critical on a device with such limited resources. However, the downside to executing in a virutalised environment is a decreased level of performance due to the extra steps involved in converting the bytecode to native machine instructions. This performance penalty can be problematic for tasks that are CPU bound. Such forms of processing would include processing data from input devices such as microphones or cameras, which has obvious implications on this project.
 
 The Android Native Development Toolkit enables the developer to write portions of an application known as Native Activities in a native language such as C or C++. The Android documentation points out that performance increases are not guaranteed and with the NDK there is an increase in application complexity, an increase in the filesize of the APK due to targeting multiple processor architectures and potentially introducing an instability to the system as the Native Activity exists outside the Activity lifecycle and memory management features.
 

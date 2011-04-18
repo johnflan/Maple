@@ -151,10 +151,9 @@ Hu invariant moments provide the ability to match shapes under translation, so c
 \colorbox{red}{would be nice to expand on hu moments}
 
 \subsubsection{Additional techniques}
-Using Hu invariant moments to compare two shapes has proven to be quite accurate. While other options such as chain codes such as Freeman’s offer an interesting alternative \cite{park05}. Histogram to detect shapes under rotation Figure \ref{chain_codes}
+Using Hu invariant moments to compare two shapes has proven to be quite accurate, but it is not the only approach we could have taken. A number of other options such as Freemans chain codes and calculating convexity defects from a convex hull offer interesting alternatives \cite{park05, iivarinen97}. 
 
-
-In addition to chain codes, calculating convexity defects from a convex hull of the shape \cite{iivarinen97}. 
+As we can see in Figure \ref{chain_codes} that chain codes are conceptually simpler than Hu invariant moments. In part \emph{a} of the figure we can see a diagram with 8 marked arrows, which can be relative or absolute directions and each direction having a unique symbol. These symbols are used to record a change in direction in a shapes contour. We see in part \emph{b} a shape with a start point which is processed to create a representation for that shape using the directionality symbols seen in part \emph{c}. Finally in part \emph{d} we see a histogram for this recorded chain code. This histogram is used to identify that contour under a rotational transform. To compare the contour under transform we simply move the starting point in the histogram on one position wrapping the previous data point to the end of the histogram \cite{anderson06}.
 
 \begin{figure}[h!]
 \centering
@@ -163,12 +162,16 @@ In addition to chain codes, calculating convexity defects from a convex hull of 
     \label{chain_codes}
 \end{figure}
 
+Finally another way of identifying a shape involves calculating convexity defects from a convex hull, this is also a successful mechanism for identifying particular kinds of shapes. Generating a convex hull involves creating a shape with the least amount of vertices to contain the detected shape, in effect connecting the most protruding points in the shape. With this convex hull we then calculate the distance from the convex hull to the actual shape. Using this technique could potentially be useful to in creating a lookup mechanism.
+
 \subsection{Storage and Retrieval}
-To describe a leaf before applying polygon approximations we see in the region of 700 Cartesian points, \colorbox{red}{how may after??}. Efficient lookup and storage of these leaf signatures is going to prove to be a difficult task.
+As we have seen earlier we are able reduce our representation of a leaf shape from 699 to 126 points. This reduction in the number of points is important, but we still require a certain number of points to have sufficient definition in the reference leaf contour. Due to the variance in complexity of leaf shape, these reference leaf signatures will be of a variable length.
 
-For this project the approach used was to load a flat file of contours into memory, storing this form of data in a relational structure would be massively inefficient.
+For our example leaf we will require in the region of 1008 bytes of memory to store this reference contour. This memory breaks down as follows. There are 126 points which are stored as a linked list. Each point is stored in a data type called \emph{CvPoint} which contains two integers, and it can be assumed that each integer requires 4 bytes of memory. In addition to this we also need to store a string for the name of the leaf as well as potentially storing a URL to provide additional information about the tree.
 
-It is clear that as the size of the library increases a lookup mechanism would be required, removing the need to store all contours in memory.
+Efficient lookup and storage of these leaf signatures is difficult. For this project the lookup was essentially a linear operation with each reference contour being compared to every contour of a particular complexity and size discovered in the image. Storage of the reference contours was preformed using a flat file containing each point. Storing this form of data in a relational structure would be massively inefficient.
+
+It is clear that as the size of the reference library increases a lookup mechanism would be required, as it may be impossible to store all the reference contours in memory. It may be necessary to take some other properties of the contour into account for creating this lookup mechanism, these could include a contour complexity or length metric. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
