@@ -1,0 +1,25 @@
+Using computer vision techniques to identify tree types using features
+discovered from their leaves, enabling the user access online/offline
+information about the tree.
+
+Main Aims
+Write a Google Android application that incorporates computer vision libraries.
+With this software build a model for identifying a leaf’s features.
+Associate these features extracted from the leaf with a type of tree.
+Special Resources Required
+
+Android based mobile device with integrated camera.
+
+Significant Milestones
+Getting an Android application with the computer vision library working
+Get the same computer vision library running on a development machine
+Getting the CV library to communicate with the devices camera.
+Modelling an initial leaf
+Training the model with new leaves
+Linking the detected leaf to known tree types
+Creating a user interface
+
+
+A project with similar goals:
+Image Recognition of Plant Leaves for Species Identification
+https://github.com/hughpearse/Sato-folium
